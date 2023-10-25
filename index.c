@@ -24,7 +24,11 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   indx += size;
   if (indx < interval) return 0;
 
-  printf("INTERVAL: %d\n", arr[indx - interval] + '0');
+  int o = indx - interval - 1;
+  int x = size + o;
+  printf("%d\n", arr[x] + '0');
+
+  /* printf("INTERVAL: %d\n", arr[indx - interval] + '0'); */
 
   *icy = &arr[interval];
   /* printf("icy: \n%s\n", &arr[interval]); */
