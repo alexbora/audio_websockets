@@ -76,8 +76,7 @@ size_t play_stream(void *buffer, size_t size, size_t nmemb, void *userp) {
   int channels, encoding = channels = 0;
   long rate = 0;
 
-  jump((char *)buffer, 16000, size * nmemb, &icy);
-  /* printf("\nICY: %s\n", icy); */
+  size_t jumped = jump((char *)buffer, 16000, size * nmemb, &icy);
 
   return size * nmemb;
 

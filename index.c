@@ -11,15 +11,19 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-char p[256];
-size_t idx;
-
-char *r;
-volatile static int indx;
-extern char *icy;
+int indx;
 
 size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   size_t over = 0;
+
+  indx += size;
+  if (indx >= 16000) {
+    printf("1: %d %s\n", arr[size - indx + 16000], &arr[size - indx + 16000]);
+    printf("index: %ld  === %ld\n", size - indx + 16000, size);
+    printf("xxx: %ld  === %d\n", 16000 - size + indx, indx);
+  }
+
+  return 0;
 
   indx += size;
   if (indx < interval) return 0;
@@ -30,7 +34,6 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
 
   /* printf("INTERVAL: %d\n", arr[indx - interval] + '0'); */
 
-  *icy = &arr[interval];
   /* printf("icy: \n%s\n", &arr[interval]); */
   over = indx - interval - arr[interval] * 1 /*16*/ + '0';
   indx = -over;
@@ -39,18 +42,3 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   return size - over;
 }
 
-#ifndef NOMAIN
-int main(int argc, char *argv[]) {
-  r = malloc(256);
-  memcpy(r, "0000100000", 10);
-
-  size_t o = jump(r, 4, sizeof("0123456789") - 1, NULL);
-
-  printf("jump: %ld jumped: %s idx: %d\n", o, &r[o], indx);
-  memset(r, '\0', 256);
-  memcpy(r, "123451", 6);
-
-  printf("jump: %ld jumped: %s idx: %d\n", o, &r[o], indx);
-  return 0;
-}
-#endif
