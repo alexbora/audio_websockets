@@ -16,11 +16,17 @@ int indx;
 size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   size_t over = 0;
 
+  int tmp = indx;
   indx += size;
   if (indx >= 16000) {
     printf("1: %d %s\n", arr[size - indx + 16000], &arr[size - indx + 16000]);
-    printf("index: %ld  === %ld\n", size - indx + 16000, size);
-    printf("xxx: %ld  === %d\n", 16000 - size + indx, indx);
+    /* printf("indx %d size %ld size - indx %ld diff %ld\n", indx, size, */
+    /* size - indx, 16000 + (size - indx)); */
+
+    printf("%d\n", arr[16000 - tmp]);
+    indx = -(arr[16000 - tmp] * 16 - 1);
+    /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
+    /* printf("xxx: %ld  === %d\n", 16000 - size + indx, indx); */
   }
 
   return 0;
