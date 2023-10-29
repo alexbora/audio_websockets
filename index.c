@@ -24,6 +24,7 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
     /* printf("indx %d size %ld size - indx %ld diff %ld\n", indx, size, */
     /* size - indx, 16000 + (size - indx)); */
     printf("%d\n", 16000 - tmp);
+
     printf("icy %d tmp %d diff %d over %d\n", arr[16000 - tmp], tmp,
            16000 - tmp, arr[16000 - tmp] * 16 + 1);
     /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
