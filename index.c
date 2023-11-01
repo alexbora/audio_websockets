@@ -30,8 +30,9 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
     indx = size - (16000 - tmp) - arr[16000 - tmp] * 16 - 1;
     /* printf("%s\n", &arr[16000 - tmp]); */
 
-    printf("icy %d tmp %d diff %d over %d %s\n", arr[16000 - tmp], tmp,
-           16000 - tmp, arr[16000 - tmp] * 16 + 1, &arr[16000 - tmp]);
+    /* printf("icy %d tmp %d diff %d over %d %s\n", arr[16000 - tmp], tmp, */
+    /* 16000 - tmp, arr[16000 - tmp] * 16 + 1, &arr[16000 - tmp]); */
+    printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp]);
     /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
     /* printf("xxx: %ld  === %d\n", 16000 - size + indx, indx); */
   }
