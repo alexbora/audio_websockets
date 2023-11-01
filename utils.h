@@ -38,5 +38,26 @@ static int binarySearch(char* c, char letter, unsigned len) {
   return -1;
 }
 
+#include <stdio.h>
+#include <string.h>
+
+static inline int binary_search_gpt(char arr[], int low, int high, char target) {
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+
+        if (arr[mid] < target)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+
+    return -1; // Element not found
+}
+
+
+
 #endif /* end of include guard UTILS_H */
 
