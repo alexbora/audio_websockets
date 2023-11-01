@@ -6,16 +6,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "utils.h"
 
 int main(int argc, char *argv[]) {
-  int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+  char *arr = "testsxx;ssssssss";
 
-  int x = binary_search(arr, 3, 0, 7);
+  int x = binary_search(arr, ';', 0, strlen(arr));
 
   printf("%d\n", x);
 
+  x = binarySearch(arr, ';', strlen(arr));
+
+  printf("%d\n", x);
   return 0;
 }
 

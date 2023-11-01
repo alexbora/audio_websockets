@@ -8,8 +8,7 @@
 
 #define UTILS_H
 
-static int binary_search(int array[], int x, int low, int high) {
-  // Repeat until the pointers low and high meet each other
+static inline int binary_search(char* array, char x, int low, int high) {
   while (low <= high) {
     int mid = low + (high - low) / 2;
 
@@ -17,11 +16,27 @@ static int binary_search(int array[], int x, int low, int high) {
 
     if (array[mid] < x)
       low = mid + 1;
-
     else
       high = mid - 1;
   }
   return -1;
 }
+
+static int binarySearch(char* c, char letter, unsigned len) {
+  int lo, mid, hi;
+  lo = 0;
+  hi = len - 1;
+  while (lo <= hi) {
+    mid = lo + (hi - lo) / 2;
+    if (c[mid] == letter)
+      return mid;
+    else if (c[mid] > letter)
+      hi = mid - 1;
+    else
+      lo = mid + 1;
+  }
+  return -1;
+}
+
 #endif /* end of include guard UTILS_H */
 
