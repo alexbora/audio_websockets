@@ -8,10 +8,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef __APPLE__
 #include <sys/wait.h>
+#endif
 #include <unistd.h>
 
 static volatile int indx;
+
+
+typedef struct {
+  char title[256]; 
+  size_t len;
+} Buffer;
+
+Buffer playing(char *arr){  
+
+Buffer buffer;
+
+return buffer; 
+}
+
 
 char title[256];
 
