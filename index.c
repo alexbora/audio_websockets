@@ -13,6 +13,8 @@
 
 static volatile int indx;
 
+char title[256];
+
 size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   size_t over = 0;
 
@@ -32,8 +34,15 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
 
     /* printf("icy %d tmp %d diff %d over %d %s\n", arr[16000 - tmp], tmp, */
     /* 16000 - tmp, arr[16000 - tmp] * 16 + 1, &arr[16000 - tmp]); */
-    printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp]);
-    *icy = &arr[16000 - tmp];
+
+    /* printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp]); */
+
+    if (arr[16000 - tmp]) {
+      int i = 0;
+      char *p = &arr[16000 - tmp] + strlen("StreamTitle='");
+      while (*p != ';') title[i++] = *p++;
+      printf("Now playing: %s\n", title);
+    }
     /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
     /* printf("xxx: %ld  === %d\n", 16000 - size + indx, indx); */
     return (arr[16000 - tmp] * 16 + 1);
