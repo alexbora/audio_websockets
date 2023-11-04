@@ -47,7 +47,7 @@
 
 #define BITS 8
 
-size_t jump(char *arr, size_t interval, size_t size, char **icy);
+size_t jump(char *, size_t, size_t, char **);
 
 mpg123_handle *mh;
 ao_device *dev;

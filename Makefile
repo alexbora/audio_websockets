@@ -30,13 +30,13 @@ CC=gcc
 endif 
 
 LIBS=`pkg-config --libs --cflags libmpg123` `pkg-config --libs --cflags ao` `pkg-config --cflags --libs libcurl`
-CFLAGS:=-w -Ofast -fomit-frame-pointer -ffast-math -fno-plt -funroll-loops -finline-functions -ftree-vectorize -funsafe-math-optimizations -funsafe-loop-optimizations -fno-stack-protector -fno-stack-check -funswitch-loops -fno-asynchronous-unwind-tables -fno-unwind-tables -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-strict-aliasing -fno-strict-overflow -fno-delete-null-pointer-checks -fno-merge-all-constants -foptimize-sibling-calls -fno-common -fno-ident -m64 -fno-rtti -fno-exceptions
+CFLAGS:=-w -Ofast -fomit-frame-pointer -ffast-math -fno-plt -funroll-loops -finline-functions -ftree-vectorize -funsafe-math-optimizations -funsafe-loop-optimizations -fno-stack-protector -fno-stack-check -funswitch-loops -fno-asynchronous-unwind-tables -fno-unwind-tables -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-strict-aliasing -fno-strict-overflow -fno-delete-null-pointer-checks -fno-merge-all-constants -foptimize-sibling-calls -fno-common -fno-ident -m64 -fno-rtti -fno-exceptions -flto 
 
 
 #  -lm 
 #-ldl -lc 
 
-.PHONY: all clea
+.PHONY: all clean
 all: 
 	@$(CC)	$(CFLAGS) $(LIBS) test3.c index.c -o test3  -DNOMAIN `pkg-config --libs --cflags libmpg123` `pkg-config --libs --cflags ao` `pkg-config --cflags --libs libcurl` 
 	# mkdir -p bin 
