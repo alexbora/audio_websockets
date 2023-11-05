@@ -57,10 +57,10 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
     /* printf("icy %d tmp %d diff %d over %d %s\n", arr[16000 - tmp], tmp, */
     /* 16000 - tmp, arr[16000 - tmp] * 16 + 1, &arr[16000 - tmp]); */
 
-    /* printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp]); */
+     printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp]); 
 
     memset(title, 0, sizeof(title));
-
+#if 0
     if (arr[16000 - tmp] + '0' != '0') {
       int i = 0;
       char *p = &arr[16000 - tmp] + strlen("StreamTitle='");
@@ -68,6 +68,7 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
         title[i++] = *p++;
       printf("Now playing: %s\n", title);
     }
+    #endif
     /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
     /* printf("xxx: %ld  === %d\n", 16000 - size + indx, indx); */
     return (arr[16000 - tmp] * 16 + 1);
