@@ -44,6 +44,9 @@ all:
 	# mv test3 bin
 	@echo "compiled"
 
+subs: 
+	make -C /libwebsockets 
+
 clean: 
 	# @rm -f [test1 test2 orgis orgis.exe test1.exe test2.exe]
 	 # if [ -f test3 ]; then rm test2; fi
@@ -51,6 +54,7 @@ clean:
 	for file in index; do if [ -f $$file ]; then rm $$file; fi; done
 	# rm -f [bin/test1 bin/test2 bin/orgis bin/orgis.exe bin/test1.exe bin/test2.exe]
 	# if [ -f bin/test1.exe ]; then rm bin/test1.exe; fi
+	rm -rf *.o *.exe test_main test3
 	@echo "cleaned"
 	
 	
