@@ -15,19 +15,26 @@
 
 static volatile int indx;
 
-
 typedef struct {
-  char title[256]; 
+  char title[256];
   size_t len;
 } Buffer;
 
-Buffer playing(char *arr){  
+Buffer playing(char *arr) {
 
-Buffer buffer;
+  Buffer buffer;
+  char *title;
 
-return buffer; 
+  if (arr) {
+    int i = 0;
+    char *p = arr + strlen("StreamTitle='");
+    while (*p != ';')
+      title[i++] = *p++;
+    printf("Now playing: %s\n", title);
+  }
+
+  return buffer;
 }
-
 
 char title[256];
 
@@ -56,7 +63,8 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
     if (arr[16000 - tmp]) {
       int i = 0;
       char *p = &arr[16000 - tmp] + strlen("StreamTitle='");
-      while (*p != ';') title[i++] = *p++;
+      while (*p != ';')
+        title[i++] = *p++;
       printf("Now playing: %s\n", title);
     }
     /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
@@ -67,7 +75,8 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   return 0;
 
   indx += size;
-  if (indx < interval) return 0;
+  if (indx < interval)
+    return 0;
 
   int o = indx - interval - 1;
   int x = size + o;
@@ -82,4 +91,3 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   printf("\nicy: %s\n", &arr[size - over]);
   return size - over;
 }
-
