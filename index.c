@@ -5,6 +5,7 @@
  */
 
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,31 +14,29 @@
 #endif
 #include <unistd.h>
 
+#include "index.h"
+
 size_t indx;
 
-typedef struct {
-  char title[256];
-  size_t len;
-} Buffer;
+char title[256];
 
-Buffer playing(char *arr) {
+Buffer playing(const uint8_t *arr) {
   Buffer buffer;
-  char t[256];
 
   if (arr) {
     int i = 0;
-    char *p = arr + strlen("StreamTitle='");
-    while (*p != ';')
-      t[i++] = *p++;
-    printf("Now playing: %s\n", t   );
+    const uint8_t *p = arr + strlen("StreamTitle='");
+    while (*p != ';') buffer.title[i++] = *p++;
+    buffer.len = i;
+    buffer.title[i] = '\0';
+
+    printf("Now playing: %s -- %ld\n", buffer.title, buffer.len);
   }
 
   return buffer;
 }
 
-char title[256];
-
-size_t jump(char *arr, size_t interval, size_t size, char **icy) {
+size_t jump(uint8_t *arr, size_t interval, size_t size, char **icy) {
   size_t over = 0;
 
   int tmp = indx;
@@ -57,12 +56,11 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
     /* printf("icy %d tmp %d diff %d over %d %s\n", arr[16000 - tmp], tmp, */
     /* 16000 - tmp, arr[16000 - tmp] * 16 + 1, &arr[16000 - tmp]); */
 
-// if(arr[16000-tmp]>0)
-     printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp] + strlen("StreamTitle = ")); 
+    // if(arr[16000-tmp]>0)
+    printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp]);
 
-// if(arr[16000-tmp]>0)
-// playing(&arr[16000-tmp]);
-    memset(title, 0, sizeof(title));
+    /* if (arr[16000 - tmp] > 0) playing(&arr[16000 - tmp]); */
+
 #if 0
     if (arr[16000 - tmp] + '0' != '0') {
       int i = 0;
@@ -71,7 +69,7 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
         title[i++] = *p++;
       printf("Now playing: %s\n", title);
     }
-    #endif
+#endif
     /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
     /* printf("xxx: %ld  === %d\n", 16000 - size + indx, indx); */
     return (arr[16000 - tmp] * 16 + 1);
@@ -80,8 +78,7 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   return 0;
 
   indx += size;
-  if (indx < interval)
-    return 0;
+  if (indx < interval) return 0;
 
   int o = indx - interval - 1;
   int x = size + o;
