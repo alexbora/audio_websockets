@@ -13,7 +13,7 @@
 #endif
 #include <unistd.h>
 
-static volatile int indx;
+size_t indx;
 
 typedef struct {
   char title[256];
@@ -22,14 +22,14 @@ typedef struct {
 
 Buffer playing(char *arr) {
   Buffer buffer;
-  char *title;
+  char t[256];
 
   if (arr) {
     int i = 0;
     char *p = arr + strlen("StreamTitle='");
     while (*p != ';')
-      title[i++] = *p++;
-    printf("Now playing: %s\n", title);
+      t[i++] = *p++;
+    printf("Now playing: %s\n", t   );
   }
 
   return buffer;
@@ -60,6 +60,8 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
 if(arr[16000-tmp]>0)
      printf("icy %d %s\n", arr[16000 - tmp], &arr[16000 - tmp] + strlen("StreamTitle = ")); 
 
+if(arr[16000-tmp]>0)
+playing(&arr[16000-tmp]);
     memset(title, 0, sizeof(title));
 #if 0
     if (arr[16000 - tmp] + '0' != '0') {
