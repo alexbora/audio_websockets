@@ -9,8 +9,8 @@
 int main(int argc, char const *argv[]) {
   struct fann *ann = fann_create_standard(3, 2, 3, 1);
 
-  fann_set_activation_function_hidden(ann, FANN_SIGMOID);
-  fann_set_activation_function_output(ann, FANN_SIGMOID);
+  fann_set_activation_function_hidden(ann, FANN_SIGMOID_SYMMETRIC);
+  fann_set_activation_function_output(ann, FANN_SIGMOID_SYMMETRIC);
 
   struct fann_train_data *data = fann_create_train(4, 2, 1);
 
@@ -18,8 +18,8 @@ int main(int argc, char const *argv[]) {
   data->input[0][1] = 1;
   /* data->output[0][0] = 2; */
 
-  data->input[1][0] = 2;
-  data->input[1][1] = 3;
+  // data->input[1][0] = 2;
+  // data->input[1][1] = 3;
   /* data->output[1][0] = 5; */
 
   fann_train_on_data(ann, data, 1000, 100, 0.01);
@@ -28,9 +28,9 @@ int main(int argc, char const *argv[]) {
 
   fann_create_from_file("xor_float.net");
   float input_data[3];
-  /* input_data[0] = 1; */
-  /* input_data[1] = 2; */
-  /* input_data[2] = 3; */
+   input_data[0] = 1; 
+   input_data[1] = 2; 
+   input_data[2] = 3; 
 
   fann_type *calc_out = fann_run(ann, input_data);
   printf("Prediction: %f\n", calc_out[0]);
