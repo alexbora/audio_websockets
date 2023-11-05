@@ -54,7 +54,7 @@ ao_device *dev;
 CURL *curl;
 mpg123_id3v1 *v1;
 mpg123_id3v2 *v2;
-volatile unsigned icy_metaint = 0;  // = 16000;
+volatile unsigned icy_metaint = 0; // = 16000;
 
 typedef struct {
   int bits;        /* bits per sample */
@@ -89,29 +89,30 @@ size_t play_stream(void *buffer, size_t size, size_t nmemb, void *userp) {
     fflush(stderr);
 
     switch (err) {
-      case MPG123_NEW_FORMAT:
-        mpg123_getformat(mh, &rate, &channels, &encoding);
-        format.bits = mpg123_encsize(encoding) * BITS;
-        format.rate = rate;
-        format.channels = channels;
-        format.byte_format = AO_FMT_NATIVE;
-        format.matrix = 0;
-        dev = ao_open_live(ao_default_driver_id(), (ao_sample_format *)&format,
-                           NULL);
+    case MPG123_NEW_FORMAT:
+      mpg123_getformat(mh, &rate, &channels, &encoding);
+      format.bits = mpg123_encsize(encoding) * BITS;
+      format.rate = rate;
+      format.channels = channels;
+      format.byte_format = AO_FMT_NATIVE;
+      format.matrix = 0;
+      dev = ao_open_live(ao_default_driver_id(), (ao_sample_format *)&format,
+                         NULL);
 
-        printf("bits: %d rate: %d charnnels: %d byte_format: %d\n", format.bits,
-               format.rate, format.channels, format.byte_format);
-        break;
+      printf("bits: %d rate: %d charnnels: %d byte_format: %d\n", format.bits,
+             format.rate, format.channels, format.byte_format);
+      break;
 
-      case MPG123_OK:
-        if (done > 0) ao_play(dev, (char *)audio, done);
-        break;
+    case MPG123_OK:
+      if (done > 0)
+        ao_play(dev, (char *)audio, done);
+      break;
 
-      case MPG123_NEED_MORE:
-        break;
+    case MPG123_NEED_MORE:
+      break;
 
-      default:
-        break;
+    default:
+      break;
     }
   } while (err == MPG123_OK);
 
@@ -140,7 +141,7 @@ int in(const char *arg) {
   mh = mpg123_new(NULL, &err);
 
   mpg123_param(mh, MPG123_VERBOSE, 0,
-               0);  // Set verbosity level to 2 (maximum verbosity)
+               0); // Set verbosity level to 2 (maximum verbosity)
   mpg123_param(mh, MPG123_RESYNC_LIMIT, -1, 0);
 
   mpg123_open_feed(mh);

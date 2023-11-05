@@ -15,119 +15,105 @@
  */
 
 #include <libwebsockets.h>
-#include <string.h>
 #include <signal.h>
+#include <string.h>
 
 static int interrupted, rx_seen, test;
 static struct lws *client_wsi;
 
-static int
-callback_dumb_increment(struct lws *wsi, enum lws_callback_reasons reason,
-	      void *user, void *in, size_t len)
-{
-	switch (reason) {
+static int callback_dumb_increment(struct lws *wsi,
+                                   enum lws_callback_reasons reason, void *user,
+                                   void *in, size_t len) {
+  switch (reason) {
 
-	/* because we are protocols[0] ... */
-	case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
-		lwsl_err("CLIENT_CONNECTION_ERROR: %s\n",
-			 in ? (char *)in : "(null)");
-		client_wsi = NULL;
-		break;
+  /* because we are protocols[0] ... */
+  case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
+    lwsl_err("CLIENT_CONNECTION_ERROR: %s\n", in ? (char *)in : "(null)");
+    client_wsi = NULL;
+    break;
 
-	case LWS_CALLBACK_CLIENT_ESTABLISHED:
-		lwsl_user("%s: established\n", __func__);
-		break;
+  case LWS_CALLBACK_CLIENT_ESTABLISHED:
+    lwsl_user("%s: established\n", __func__);
+    break;
 
-	case LWS_CALLBACK_CLIENT_RECEIVE:
-		lwsl_user("RX: %s\n", (const char *)in);
-		rx_seen++;
-		if (test && rx_seen == 10)
-			interrupted = 1;
-		break;
+  case LWS_CALLBACK_CLIENT_RECEIVE:
+    lwsl_user("RX: %s\n", (const char *)in);
+    rx_seen++;
+    if (test && rx_seen == 10)
+      interrupted = 1;
+    break;
 
-	case LWS_CALLBACK_CLIENT_CLOSED:
-		client_wsi = NULL;
-		break;
+  case LWS_CALLBACK_CLIENT_CLOSED:
+    client_wsi = NULL;
+    break;
 
-	default:
-		break;
-	}
+  default:
+    break;
+  }
 
-	return lws_callback_http_dummy(wsi, reason, user, in, len);
+  return lws_callback_http_dummy(wsi, reason, user, in, len);
 }
 
 static const struct lws_protocols protocols[] = {
-	{
-		"dumb-increment-protocol",
-		callback_dumb_increment,
-		0, 0, 0, NULL, 0
-	},
-	LWS_PROTOCOL_LIST_TERM
-};
+    {"dumb-increment-protocol", callback_dumb_increment, 0, 0, 0, NULL, 0},
+    LWS_PROTOCOL_LIST_TERM};
 
-static void
-sigint_handler(int sig)
-{
-	interrupted = 1;
-}
+static void sigint_handler(int sig) { interrupted = 1; }
 
-int main(int argc, const char **argv)
-{
-	struct lws_context_creation_info info;
-	struct lws_client_connect_info i;
-	struct lws_context *context;
-	const char *p;
-	int n = 0, logs = LLL_LATENCY | LLL_ERR | LLL_WARN
-		/* for LLL_ verbosity above NOTICE to be built into lws, lws
-		 * must have been configured with -DCMAKE_BUILD_TYPE=DEBUG
-		 * instead of =RELEASE */
-		/* | LLL_INFO */ /* | LLL_PARSER */ /* | LLL_HEADER */
-		/* | LLL_EXT */ /* | LLL_CLIENT */ /* | LLL_LATENCY */
-		/* | LLL_DEBUG */;
+int main(int argc, const char **argv) {
+  struct lws_context_creation_info info;
+  struct lws_client_connect_info i;
+  struct lws_context *context;
+  const char *p;
+  int n = 0, logs = LLL_LATENCY | LLL_ERR | LLL_WARN
+      /* for LLL_ verbosity above NOTICE to be built into lws, lws
+       * must have been configured with -DCMAKE_BUILD_TYPE=DEBUG
+       * instead of =RELEASE */
+      /* | LLL_INFO */ /* | LLL_PARSER */ /* | LLL_HEADER */
+      /* | LLL_EXT */ /* | LLL_CLIENT */  /* | LLL_LATENCY */
+      /* | LLL_DEBUG */;
 
-	signal(SIGINT, sigint_handler);
-	if ((p = lws_cmdline_option(argc, argv, "-d")))
-		logs = atoi(p);
+  signal(SIGINT, sigint_handler);
+  if ((p = lws_cmdline_option(argc, argv, "-d")))
+    logs = atoi(p);
 
-	test = !!lws_cmdline_option(argc, argv, "-t");
+  test = !!lws_cmdline_option(argc, argv, "-t");
 
-	lws_set_log_level(logs, NULL);
-	
+  lws_set_log_level(logs, NULL);
 
-	memset(&info, 0, sizeof info); /* otherwise uninitialized garbage */
-	info.options = LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT;
-	info.port = CONTEXT_PORT_NO_LISTEN; /* we do not run any server */
-	info.protocols = protocols;
-	info.timeout_secs = 10;
-	info.connect_timeout_secs = 30;
+  memset(&info, 0, sizeof info); /* otherwise uninitialized garbage */
+  info.options = LWS_SERVER_OPTION_DO_SSL_GLOBAL_INIT;
+  info.port = CONTEXT_PORT_NO_LISTEN; /* we do not run any server */
+  info.protocols = protocols;
+  info.timeout_secs = 10;
+  info.connect_timeout_secs = 30;
 
-	info.fd_limit_per_thread = 1 + 1 + 1;
+  info.fd_limit_per_thread = 1 + 1 + 1;
 
-	context = lws_create_context(&info);
-	
+  context = lws_create_context(&info);
 
-	memset(&i, 0, sizeof i); /* otherwise uninitialized garbage */
-	i.context = context;
-	i.port = 80;
-	i.address = "s1-webradio.antenne.de";
-	i.path = "/chillout/stream/mp3";
-	i.host = i.address;
-	i.origin = i.address;
-	// i.ssl_connection = LCCSCF_USE_SSL;
-	i.protocol = protocols[0].name; /* "dumb-increment-protocol" */
-	i.pwsi = &client_wsi;
+  memset(&i, 0, sizeof i); /* otherwise uninitialized garbage */
+  i.context = context;
+  i.port = 80;
+  i.address = "s1-webradio.antenne.de";
+  i.path = "/chillout/stream/mp3";
+  i.host = i.address;
+  i.origin = i.address;
+  // i.ssl_connection = LCCSCF_USE_SSL;
+  i.protocol = protocols[0].name; /* "dumb-increment-protocol" */
+  i.pwsi = &client_wsi;
 
-	if (lws_cmdline_option(argc, argv, "--h2"))
-		i.alpn = "h2";
+  if (lws_cmdline_option(argc, argv, "--h2"))
+    i.alpn = "h2";
 
-	lws_client_connect_via_info(&i);
+  lws_client_connect_via_info(&i);
 
-	while (n >= 0 && client_wsi && !interrupted)
-		n = lws_service(context, 0);
+  while (n >= 0 && client_wsi && !interrupted)
+    n = lws_service(context, 0);
 
-	lws_context_destroy(context);
+  lws_context_destroy(context);
 
-	lwsl_user("Completed %s\n", rx_seen > 10 ? "OK" : "Failed");
+  lwsl_user("Completed %s\n", rx_seen > 10 ? "OK" : "Failed");
 
-	return rx_seen > 10;
+  return rx_seen > 10;
 }
