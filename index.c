@@ -27,7 +27,8 @@ Buffer playing(char *arr) {
   if (arr) {
     int i = 0;
     char *p = arr + strlen("StreamTitle='");
-    while (*p != ';') title[i++] = *p++;
+    while (*p != ';')
+      title[i++] = *p++;
     printf("Now playing: %s\n", title);
   }
 
@@ -63,7 +64,8 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
     if (arr[16000 - tmp] + '0' != '0') {
       int i = 0;
       char *p = &arr[16000 - tmp] + strlen("StreamTitle='");
-      while (*p != ';') title[i++] = *p++;
+      while (*p != ';')
+        title[i++] = *p++;
       printf("Now playing: %s\n", title);
     }
     /* printf("index: %ld  === %ld\n", size - indx + 16000, size); */
@@ -74,7 +76,8 @@ size_t jump(char *arr, size_t interval, size_t size, char **icy) {
   return 0;
 
   indx += size;
-  if (indx < interval) return 0;
+  if (indx < interval)
+    return 0;
 
   int o = indx - interval - 1;
   int x = size + o;
