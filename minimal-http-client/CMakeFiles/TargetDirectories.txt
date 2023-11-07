@@ -1,0 +1,3 @@
+C:/Temp/libwebsockets/minimal-examples-lowlevel/http-client/minimal-http-client/CMakeFiles/lws-minimal-http-client.dir
+C:/Temp/libwebsockets/minimal-examples-lowlevel/http-client/minimal-http-client/CMakeFiles/edit_cache.dir
+C:/Temp/libwebsockets/minimal-examples-lowlevel/http-client/minimal-http-client/CMakeFiles/rebuild_cache.dir

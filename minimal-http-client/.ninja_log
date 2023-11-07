@@ -1,0 +1,9 @@
+# ninja log v5
+47	1553	7210400257195439	CMakeFiles/lws-minimal-http-client.dir/minimal-http-client.c.obj	57dc30ec831eeee1
+1559	2052	7210400262148237	lws-minimal-http-client.exe	7b1bee27af9ddcec
+42	1030	7210401804718168	CMakeFiles/lws-minimal-http-client.dir/minimal-http-client.c.obj	57dc30ec831eeee1
+1031	1334	7210401807720962	lws-minimal-http-client.exe	7b1bee27af9ddcec
+24	857	7210402226090277	CMakeFiles/lws-minimal-http-client.dir/minimal-http-client.c.obj	57dc30ec831eeee1
+858	1132	7210402228773488	lws-minimal-http-client.exe	7b1bee27af9ddcec
+22	820	7210403016705382	CMakeFiles/lws-minimal-http-client.dir/minimal-http-client.c.obj	57dc30ec831eeee1
+821	1105	7210403019411944	lws-minimal-http-client.exe	7b1bee27af9ddcec
