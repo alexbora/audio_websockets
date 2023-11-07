@@ -3,11 +3,28 @@
 	{
 		"selected_items":
 		[
+			[
+				"ui",
+				"uint8_t\t  Interface"
+			],
+			[
+				"fann_train_on",
+				"fann_train_on_data(struct fann *ann, struct fann_train_data *data, unsigned int max_epochs, unsigned int epochs_between_reports, float desired_error)\t  void"
+			],
+			[
+				"fann_set_ac",
+				"fann_set_activation_function_hidden(struct fann *ann, enum fann_activationfunc_enum activation_function)\t  void"
+			],
+			[
+				"fan_cre",
+				"fann_create_standard(unsigned int num_layers, ...)\t  struct fann *"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
+<<<<<<< HEAD
 			"file": "/C/Temp/libwebsockets/minimal-examples-lowlevel/ws-client/minimal-ws-client/minimal-ws-client.c",
 			"settings":
 			{
@@ -22,6 +39,41 @@
 			{
 				"buffer_size": 10376,
 				"line_ending": "Windows"
+=======
+			"file": "index.c",
+			"settings":
+			{
+				"buffer_size": 2407,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.h",
+			"settings":
+			{
+				"buffer_size": 81,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test_main.c",
+			"settings":
+			{
+				"buffer_size": 1357,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "utils.h",
+			"settings":
+			{
+				"buffer_size": 1183,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+>>>>>>> origin/master
 			}
 		}
 	],
@@ -37,10 +89,37 @@
 		"selected_items":
 		[
 			[
+<<<<<<< HEAD
 				"prefe",
 				"Preferences: Settings"
 			],
 			[
+=======
+				"sett",
+				"Snippet: struct"
+			],
+			[
+				"settin",
+				"Preferences: Settings"
+			],
+			[
+				"ui",
+				"UI: Select Theme"
+			],
+			[
+				"color",
+				"UI: Select Color Scheme"
+			],
+			[
+				"the",
+				"UI: Select Theme"
+			],
+			[
+				"ar",
+				"Arithmetic"
+			],
+			[
+>>>>>>> origin/master
 				"packa",
 				"Preferences: Browse Packages"
 			],
@@ -79,10 +158,6 @@
 			[
 				"pacla",
 				"Package Control: List Packages"
-			],
-			[
-				"ui",
-				"UI: Select Color Scheme"
 			],
 			[
 				"instal",
@@ -132,11 +207,15 @@
 	],
 	"file_history":
 	[
+<<<<<<< HEAD
 		"/C/Temp/libwebsockets/minimal-examples-lowlevel/ws-client/minimal-ws-client-tx/minimal-ws-client.c",
 		"/C/Temp/libwebsockets/minimal-examples-lowlevel/raw/minimal-raw-audio/audio.c",
 		"/C/Temp/libwebsockets/minimal-examples-lowlevel/http-client/minimal-http-client/minimal-http-client.c",
 		"/C/Temp/libwebsockets/minimal-examples-lowlevel/secure-streams/minimal-secure-streams-cpp/main.cxx",
 		"/C/Temp/audio_websockets/test3_websockets.c",
+=======
+		"/Users/alex/Desktop/audio_websockets/fann.c",
+>>>>>>> origin/master
 		"/Users/alex/Desktop/audio_websockets/test3.c",
 		"/Users/alex/Desktop/audio_websockets/test2.c",
 		"/Users/alex/Desktop/audio_websockets/test3",
@@ -184,60 +263,247 @@
 	"groups":
 	[
 		{
+<<<<<<< HEAD
 			"selected": 1,
+=======
+			"selected": 3,
+>>>>>>> origin/master
 			"sheets":
 			[
 				{
 					"buffer": 0,
+<<<<<<< HEAD
 					"file": "/C/Temp/libwebsockets/minimal-examples-lowlevel/ws-client/minimal-ws-client/minimal-ws-client.c",
 					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 5471,
+=======
+					"file": "index.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2407,
+>>>>>>> origin/master
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								311,
 								311
+=======
+								295,
+								295
+>>>>>>> origin/master
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
 							"syntax": "Packages/C++/C.sublime-syntax",
 							"translate_tabs_to_spaces": false
+=======
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".<>:\"/*",
+									"selector": "source.c"
+								}
+							],
+							"lsp_active": true,
+							"lsp_language":
+							{
+								"clangd": "c"
+							},
+							"show_definitions": false,
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+>>>>>>> origin/master
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+<<<<<<< HEAD
+=======
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "index.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 81,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								19
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".<>:\"/*",
+									"selector": "source.c++"
+								}
+							],
+							"auto_name": "",
+							"lsp_active": true,
+							"lsp_language":
+							{
+								"clangd": "cpp"
+							},
+							"show_definitions": false,
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "test_main.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1357,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1357,
+								1357
+							]
+						],
+						"settings":
+						{
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								231,
+								11,
+								4,
+								9,
+								4,
+								33,
+								10,
+								234,
+								248,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"lsp_active": true,
+							"lsp_language":
+							{
+								"clangd": "c"
+							},
+							"show_definitions": false,
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 791.0,
+						"zoom_level": 1.0
+					},
+>>>>>>> origin/master
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
+<<<<<<< HEAD
 					"buffer": 1,
 					"file": "/C/Temp/libwebsockets/minimal-examples-lowlevel/secure-streams/minimal-secure-streams-alexa/audio.c",
 					"semi_transient": true,
 					"settings":
 					{
 						"buffer_size": 10376,
+=======
+					"buffer": 3,
+					"file": "utils.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1183,
+>>>>>>> origin/master
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								0,
 								0
+=======
+								184,
+								184
+>>>>>>> origin/master
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 							"incomplete_sync": null,
 							"remote_loading": false,
 							"synced": false,
@@ -246,6 +512,78 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 3315.0,
+=======
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html"
+								},
+								{
+									"characters": ".<>:\"/*",
+									"selector": "source.c++"
+								}
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								231,
+								11,
+								4,
+								9,
+								4,
+								33,
+								10,
+								239,
+								56,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"lsp_active": true,
+							"lsp_language":
+							{
+								"clangd": "cpp"
+							},
+							"show_definitions": false,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+>>>>>>> origin/master
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
