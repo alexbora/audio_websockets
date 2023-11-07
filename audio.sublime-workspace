@@ -7,6 +7,23 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/C/Temp/libwebsockets/minimal-examples-lowlevel/ws-client/minimal-ws-client/minimal-ws-client.c",
+			"settings":
+			{
+				"buffer_size": 5471,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Temp/libwebsockets/minimal-examples-lowlevel/secure-streams/minimal-secure-streams-alexa/audio.c",
+			"settings":
+			{
+				"buffer_size": 10376,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -19,6 +36,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"prefe",
+				"Preferences: Settings"
+			],
 			[
 				"packa",
 				"Preferences: Browse Packages"
@@ -100,10 +121,22 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/alex/Desktop/audio_websockets"
+		"/C/Temp/audio_websockets",
+		"/C/Temp/audio_websockets/libwebsockets",
+		"/C/Temp/libwebsockets",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/http-client",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/http-client/minimal-http-client",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/secure-streams",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/secure-streams/minimal-secure-streams-alexa"
 	],
 	"file_history":
 	[
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/ws-client/minimal-ws-client-tx/minimal-ws-client.c",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/raw/minimal-raw-audio/audio.c",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/http-client/minimal-http-client/minimal-http-client.c",
+		"/C/Temp/libwebsockets/minimal-examples-lowlevel/secure-streams/minimal-secure-streams-cpp/main.cxx",
+		"/C/Temp/audio_websockets/test3_websockets.c",
 		"/Users/alex/Desktop/audio_websockets/test3.c",
 		"/Users/alex/Desktop/audio_websockets/test2.c",
 		"/Users/alex/Desktop/audio_websockets/test3",
@@ -117,7 +150,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 66.0
 	},
 	"find_in_files":
 	{
@@ -131,6 +164,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"path",
+			"meta",
+			"address"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -148,18 +184,83 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/C/Temp/libwebsockets/minimal-examples-lowlevel/ws-client/minimal-ws-client/minimal-ws-client.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5471,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								311,
+								311
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Temp/libwebsockets/minimal-examples-lowlevel/secure-streams/minimal-secure-streams-alexa/audio.c",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 10376,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3315.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 26.0
 	},
 	"input":
 	{
-		"height": 47.0
+		"height": 48.0
 	},
 	"layout":
 	{
@@ -184,6 +285,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.SFTP":
+	{
+		"height": 0.0
+	},
 	"output.diagnostics":
 	{
 		"height": 145.0
@@ -200,7 +305,7 @@
 	"project": "audio.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 48.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -238,7 +343,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 230.0,
+	"side_bar_width": 391.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
