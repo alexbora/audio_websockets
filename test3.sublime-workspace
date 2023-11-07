@@ -1,0 +1,1499 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"stru",
+				"struct\tstruct"
+			],
+			[
+				"std",
+				"stdio.h\tstandard header"
+			],
+			[
+				"in",
+				"inc\t#include <…>"
+			],
+			[
+				"mi",
+				"mix_fn"
+			],
+			[
+				"m",
+				"mix_fn"
+			],
+			[
+				"p",
+				"procedure_t"
+			],
+			[
+				"fun",
+				"func_hmac"
+			],
+			[
+				"fu",
+				"func_dec"
+			],
+			[
+				"funcc",
+				"func_dec"
+			],
+			[
+				"F",
+				"FLAG_0"
+			],
+			[
+				"FL",
+				"FLAG_1"
+			],
+			[
+				"cpuid",
+				"cpu_getmodelid(char *outbuf, size_t maxsz)\t  void"
+			],
+			[
+				"if",
+				"if_\tif(…)"
+			],
+			[
+				"str",
+				"struct_\tstruct"
+			],
+			[
+				"AL",
+				"align"
+			],
+			[
+				"fix",
+				"fix_session\t  Struct"
+			],
+			[
+				"siz",
+				"sizeof(expression-or-type)\t  size_t"
+			],
+			[
+				"un",
+				"unsigned\t  Keyword"
+			],
+			[
+				"fix_s",
+				"fix_session"
+			],
+			[
+				"fix_se",
+				"fix_session_cfg"
+			],
+			[
+				"cu",
+				"currentSeconds\t  long"
+			],
+			[
+				"strl",
+				"strlen(const char *_Str)\t  unsigned long long"
+			],
+			[
+				"tm",
+				"tm_year\t  int"
+			],
+			[
+				"sig",
+				"sig_atomic_t\t  Interface"
+			],
+			[
+				"size",
+				"size_t\t  Interface"
+			],
+			[
+				"si",
+				"sizeof(expression-or-type)\t  size_t"
+			],
+			[
+				"stl",
+				"stdlib.h>\t  File"
+			],
+			[
+				"st",
+				"stdio.h>\t  File"
+			],
+			[
+				"as",
+				"assert.h>\t  File"
+			],
+			[
+				"CLO",
+				"CLOCKS_PER_SEC\t  Text"
+			],
+			[
+				"inc",
+				"inc\t#include <…>"
+			],
+			[
+				"inclu",
+				"include <header>\t  Snippet"
+			],
+			[
+				"arr",
+				"arr_alloc(size_t x, size_t y, char (**aptr)[x][y])\t  void"
+			],
+			[
+				"stdi",
+				"stdio.h>\t  File"
+			],
+			[
+				"e",
+				"enum\t  Keyword"
+			],
+			[
+				"ma",
+				"malloc"
+			],
+			[
+				"I",
+				"Inc\t#include <…>"
+			],
+			[
+				"fn",
+				"fn4"
+			],
+			[
+				"print_",
+				"print_double_array"
+			],
+			[
+				"cal",
+				"calloc_double_matrix"
+			],
+			[
+				"pri",
+				"printf\tprintf …"
+			],
+			[
+				"print",
+				"print_st"
+			],
+			[
+				"f",
+				"f"
+			],
+			[
+				"s",
+				"stdio.h\tstandard header"
+			],
+			[
+				"i",
+				"inc\t#include <…>"
+			],
+			[
+				"pthrea",
+				"pthread_cond_t"
+			],
+			[
+				"stas",
+				"stats_prinf"
+			],
+			[
+				"St",
+				"stdlib.h\tstandard header"
+			],
+			[
+				"pt",
+				"pthread_mutex_unlock"
+			],
+			[
+				"pthrae",
+				"pthread_mutex_unlock"
+			],
+			[
+				"pthread",
+				"pthread_mutex_lock"
+			],
+			[
+				"pth",
+				"pthread_mutex_t"
+			],
+			[
+				"pthr",
+				"pthread_mutex_unlock"
+			],
+			[
+				"keyva",
+				"keyval"
+			],
+			[
+				"pair",
+				"pairs"
+			],
+			[
+				"func",
+				"funct\tRegular function"
+			],
+			[
+				"int",
+				"pthread_mutex_init"
+			],
+			[
+				"at",
+				"stdatomic.h\tstandard header (since c11)"
+			],
+			[
+				"for",
+				"for_\tFor Loop"
+			],
+			[
+				"ife",
+				"ifelse\tif(…) else"
+			],
+			[
+				"mess",
+				"Message"
+			],
+			[
+				"d",
+				"do_\tDo While Loop"
+			],
+			[
+				"SS",
+				"strstr"
+			],
+			[
+				"time",
+				"time"
+			],
+			[
+				"type",
+				"typedef"
+			],
+			[
+				"main",
+				"max_size\tfunc"
+			],
+			[
+				"I-stdio",
+				"I-stdbool\tinc"
+			],
+			[
+				"ini",
+				"ATOMIC_FLAG_INIT\tatomic"
+			],
+			[
+				"Bu",
+				"BUFSIZ"
+			],
+			[
+				"Exce",
+				"exception()\tlogging"
+			],
+			[
+				"def",
+				"def\tFunction"
+			],
+			[
+				"__",
+				"__name__\tinstance"
+			],
+			[
+				"class",
+				"class\tNew Class"
+			],
+			[
+				"Err",
+				"ErrorHandler\txml"
+			],
+			[
+				"populate",
+				"populate_list"
+			],
+			[
+				"TK",
+				"Tk\ttkinter"
+			],
+			[
+				"__repr__",
+				"__repr__()\tnetrc"
+			],
+			[
+				"pro",
+				"property\tproperty"
+			],
+			[
+				"init__",
+				"__init__\tmagic"
+			],
+			[
+				"sfrtime",
+				"strftime()\tdatetime"
+			],
+			[
+				"Locae",
+				"locale"
+			],
+			[
+				"timep",
+				"timestamp()\tdatetime"
+			],
+			[
+				"super",
+				"super()\tpyclbr"
+			],
+			[
+				"matp",
+				"matplotlib\tmodule"
+			],
+			[
+				"days",
+				"days_till_end_month\tstatement"
+			],
+			[
+				"slee",
+				"sleep()\ttime"
+			],
+			[
+				"writer",
+				"writerow\tfunction"
+			],
+			[
+				"setlo",
+				"setlocale()\tlocale"
+			],
+			[
+				"new",
+				"new_releases\tstatement"
+			],
+			[
+				"encon",
+				"encoding()\tcurses"
+			],
+			[
+				"encod",
+				"encoding\tstatement"
+			],
+			[
+				"encode",
+				"encode()\tcodecs"
+			],
+			[
+				"en",
+				"encode()\tcodecs"
+			],
+			[
+				"u",
+				"urlparse"
+			],
+			[
+				"stat",
+				"status_code\tstatement"
+			],
+			[
+				"requst",
+				"request()\thttp"
+			],
+			[
+				"LO",
+				"LoginForm\tclass"
+			],
+			[
+				"sfttime",
+				"strftime()\tdatetime"
+			],
+			[
+				"t",
+				"timedelta\tclass"
+			],
+			[
+				"weekd",
+				"weekday()\tcalendar"
+			],
+			[
+				"property",
+				"property\tNew Property"
+			],
+			[
+				"to",
+				"to_fahrenheit\tfunction"
+			],
+			[
+				"__ge",
+				"__getattribute__\tmagic"
+			],
+			[
+				"__attr",
+				"__getattr__\tmagic"
+			],
+			[
+				"week",
+				"weekday()\tcalendar"
+			],
+			[
+				"wee",
+				"weekday()\tcalendar"
+			],
+			[
+				"False",
+				"False\tkeyword"
+			],
+			[
+				"__d",
+				"__dict__\tinstance"
+			],
+			[
+				"self",
+				"self\tparam"
+			],
+			[
+				"pr",
+				"pr_m\tfunction"
+			],
+			[
+				"do",
+				"do_twice\tfunction"
+			],
+			[
+				"nth",
+				"nth_function\tnth_function"
+			],
+			[
+				"iterat",
+				"iteratorx\tfunction"
+			],
+			[
+				"ran",
+				"randomize_carefully\tfunction"
+			],
+			[
+				"choi",
+				"choices\tstatement"
+			],
+			[
+				"lis",
+				"lis_1\tstatement"
+			],
+			[
+				"return",
+				"returnValue\tstatement"
+			],
+			[
+				"c",
+				"choices\tstatement"
+			],
+			[
+				"V",
+				"V2\tstatement"
+			],
+			[
+				"None",
+				"None\tkeyword"
+			],
+			[
+				"re",
+				"return\tkeyword"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"prefere",
+				"Preferences: Settings"
+			],
+			[
+				"LSP",
+				"LSP: Enable Language Server in Project"
+			],
+			[
+				"clang",
+				"LSP: Clear Diagnostics"
+			],
+			[
+				"colo",
+				"UI: Select Color Scheme"
+			],
+			[
+				"the",
+				"UI: Select Theme"
+			],
+			[
+				"copil",
+				"Preferences: LSP-copilot Settings"
+			],
+			[
+				"lsp",
+				"LSP: Enable Language Server Globally"
+			],
+			[
+				"copi",
+				"Package Control: Add Repository"
+			],
+			[
+				"view",
+				"View: Toggle Menu"
+			],
+			[
+				"sett",
+				"Preferences: Settings"
+			],
+			[
+				"color",
+				"UI: Select Color Scheme"
+			],
+			[
+				"theme",
+				"UI: Select Color Scheme"
+			],
+			[
+				"scheme",
+				"UI: Select Color Scheme"
+			],
+			[
+				"prefe",
+				"Preferences: Settings"
+			],
+			[
+				"LSP ",
+				"Preferences: LSP Settings"
+			],
+			[
+				"LS",
+				"LSP: Enable Language Server Globally"
+			],
+			[
+				"LSP pre",
+				"Preferences: LSP Settings"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"packages",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"Clang",
+				"Clang Format: Select Style"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"ena",
+				"LSP: Enable Language Server Globally"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"enav",
+				"LSP: Enable Language Server Globally"
+			],
+			[
+				"",
+				"Bookmarks: Select Next"
+			],
+			[
+				"gruv",
+				"gruvbox: Select Theme"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"enab",
+				"Package Control: Enable Package"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"di",
+				"Package Control: Disable Package"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"clan",
+				"Snippet: Clang version >= check"
+			],
+			[
+				"ls",
+				"LSP: Enable Language Server Globally"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"cla",
+				"Clang Format: Select Style"
+			],
+			[
+				"snipets",
+				"Snippet: struct"
+			],
+			[
+				"install pa",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Regular function"
+			],
+			[
+				"snippets",
+				"SnippetMaker: Edit Snippet"
+			],
+			[
+				"installe",
+				"SublimeLinter: Show All Errors"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"c impo",
+				"Set Syntax: C Improved"
+			],
+			[
+				"snippe",
+				"Snippet: nth_function"
+			],
+			[
+				"packageRes",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"insa",
+				"Package Control: Install Package"
+			],
+			[
+				"zea",
+				"Zeal: Search"
+			],
+			[
+				"pa",
+				"Package Control: Remove Package"
+			],
+			[
+				"unins",
+				"SublimeLinter: Show Line Errors"
+			],
+			[
+				"remote edi",
+				"Remote Edit: Open Remote File Prompt"
+			],
+			[
+				"Package Control: ena",
+				"Package Control: Enable Package"
+			],
+			[
+				"virtu",
+				"Virtualenv: Add directory"
+			],
+			[
+				"virtua",
+				"Virtualenv: New (venv)"
+			],
+			[
+				"virt",
+				"Virtualenv: Activate"
+			],
+			[
+				"virtual",
+				"Virtualenv: Activate"
+			],
+			[
+				"comm",
+				"Git: Commit"
+			],
+			[
+				"add",
+				"Git: Add Current File"
+			],
+			[
+				"git",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add Current File"
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"git a",
+				"Git: Add Current File"
+			],
+			[
+				"com",
+				"Git: Commit"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"git ",
+				"Set Syntax: Git Commit"
+			],
+			[
+				"removepa",
+				"Package Control: Remove Package"
+			],
+			[
+				"gita",
+				"Git: Add..."
+			],
+			[
+				"Package Control:",
+				"Package Control: Remove Package"
+			],
+			[
+				"v",
+				"View: Toggle Tabs"
+			],
+			[
+				"py",
+				"Snippet: Try/Except"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 171.0,
+		"history":
+		[
+			"dd",
+			"exit",
+			"exot",
+			"exit",
+			"python",
+			"import django",
+			"exit()",
+			"pip",
+			"import sklearn",
+			"conda install -c anaconda scikit-learn",
+			"clear",
+			"python -V",
+			"exit()",
+			"pip",
+			"exit()",
+			"pip install",
+			"ls",
+			"exit()",
+			"python -V",
+			"pip install matplotlib",
+			"python help()",
+			"python help",
+			"help",
+			"help()",
+			"help(random)",
+			"print(help(random))",
+			"dir(ranoom)",
+			"clear()",
+			"cls",
+			"clear",
+			"sys.executable",
+			"import sys",
+			"sys.executable",
+			"exit()",
+			"git config --global --edit",
+			"sys.executable",
+			"sys.version",
+			"sys.executable",
+			"import sys",
+			"import os",
+			"exit()",
+			"import os",
+			"sys.executable",
+			"import sys",
+			"import pkg_resources",
+			"sys.version",
+			"import os",
+			"sys.version",
+			"import sys",
+			"exit()",
+			"clear",
+			"python",
+			"python -version",
+			"exit()",
+			"impot sys",
+			"import os",
+			"pip3 install requests",
+			"Terminus: Open Dþþefault Shell in Tab",
+			"exit()",
+			"git",
+			"kk",
+			"Terminus: Open Default Shell in Tab",
+			"clear",
+			"exe7.py",
+			"import requests",
+			"cmd",
+			"filename.py",
+			"print(help(datetime))",
+			"import help",
+			"print(help(datetime))",
+			"print(dir(datetime))",
+			"import datetime",
+			"print(dir(datetime))",
+			"cmd",
+			"ksh",
+			"zsh",
+			"bash",
+			"dir",
+			"mkkdir"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": false,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Temp/FLTK/fltk-1.4.x/user/fltk_input_gui/new/ARRAY/sublime_ray.sublime-project",
+		"/C/Users/a049689/Desktop/parse_1.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/clang_format.sublime-settings",
+		"/C/Users/a049689/Desktop/DIV/parse_1.c",
+		"/C/Users/a049689/Desktop/1.c",
+		"/C/Users/a049689/Desktop/DIV/tcc/examples/fib.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/foaie.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/test8.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/test7.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/struct3.c",
+		"/C/Users/a049689/Desktop/1/new_repo2/list.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/typedef.c",
+		"/C/Users/a049689/Desktop/1/new_repo2/EXTRA/thread.c",
+		"/C/Users/a049689/Desktop/PartnerProposition.exe",
+		"/C/Users/a049689/Desktop/test1.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/cpuminer-opt-cpupower/elist.h",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/cpuminer-opt-cpupower/util.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/cpuminer-opt-cpupower/miner.h",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/cpuminer-opt-cpupower/cpu-miner.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/cpuminer-opt-cpupower/compat/pthreads/pthread.h",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/tmp/cpuminer-opt-cpupower/sysinfos.c",
+		"/C/Users/a049689/Desktop/test.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/clang_format_custom.sublime-settings",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/sock_e.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/1.nasm",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/STRING/setup.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/STRING/string.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/STRING/buffer.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/test_array1.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/string.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/example1.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/test.txt",
+		"/C/Users/a049689/Desktop/test.md",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/Clang Format/clang_format_custom.sublime-settings",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/style.clang-format",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/ClangAutoComplete.sublime-settings",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/test_array2.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/sterge4.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/test_x3.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/test_x5.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/Zeal.sublime-settings",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/SublimeLinter-gcc/README.md",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/Zeal/Zeal.sublime-settings",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/msg/test_x3.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/LSP.sublime-settings",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/LSP/LSP.sublime-settings",
+		"/C/home2/home/a049689/process_lib.c",
+		"/C/Users/a049689/Desktop/pers/MING/home/a049689/sym.c",
+		"/C/home2/home/a049689/.gitconfig",
+		"/C/Users/a049689/Desktop/sublx/Data/Local/License.sublime_license",
+		"/C/home2/home/a049689/randx.c",
+		"/C/Users/a049689/Desktop/sterge.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/SublimeLinter-gcc/miscellaneous/demo.cpp",
+		"/C/home2/home/a049689/stergex.c",
+		"/C/home2/home/a049689/stergez.c",
+		"/C/home2/home/a049689/logout.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/Package Control.sublime-settings",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/IntelliDocs/README.md",
+		"/C/Users/a049689/Desktop/sterge333.c",
+		"/C/Users/a049689/Desktop/sterge5.c",
+		"/C/Users/a049689/Desktop/sterge4.c",
+		"/C/MinGW/msys/1.0/home/a049689/compose.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/Clang Format/clang_format.sublime-settings",
+		"/C/Users/a049689/Desktop/sterge1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/malinen/base64.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/BUN.py",
+		"/C/Users/a049689/Desktop/C/ars.c",
+		"/C/Users/a049689/Desktop/C/file2.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/compile_and_run.sublime-build",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/GCC_compile.sublime-build",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/User/COMPILE.sublime-build",
+		"/C/Users/a049689/Desktop/VIRTUAL/apple.c",
+		"/C/Users/a049689/Desktop/subl/Data/Packages/C++11/messages/install.txt",
+		"/C/MinGW/bin/error1.c",
+		"/C/MinGW/bin/init3.c",
+		"/C/MinGW/bin/init2.c",
+		"/C/MinGW/bin/ss.c",
+		"/C/Users/a049689/Desktop/C/ss_1.c",
+		"/C/Users/a049689/Desktop/C/request.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/evp1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/cx.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/cc7.c",
+		"/C/MinGW/bin/arrayx.h",
+		"/C/MinGW/bin/dict.c",
+		"/C/MinGW/bin/dict.h",
+		"/C/MinGW/bin/k.c",
+		"/C/MinGW/bin/k.h",
+		"/C/MinGW/bin/keyval.c",
+		"/C/Users/a049689/AppData/Local/Temp/is-3G331.tmp/editor-test.txt",
+		"/C/MinGW/bin/array2.c",
+		"/C/MinGW/bin/dict_use.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/cc4.c",
+		"/C/MinGW/bin/keyval.h",
+		"/C/MinGW/bin/poly1.c",
+		"/C/MinGW/bin/stergeh.c",
+		"/C/MinGW/bin/params2.c",
+		"/C/MinGW/bin/params_M.c",
+		"/C/MinGW/bin/params.c",
+		"/C/MinGW/bin/params.h",
+		"/C/Users/a049689/Desktop/VIRTUAL/v3.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/w1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/c1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/cc1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/cc3.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/str1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/struct.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/curl1.c",
+		"/C/MinGW/bin/particular.h",
+		"/C/Users/a049689/Desktop/http.c",
+		"/C/Users/a049689/Desktop/rr1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/programm.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/ba1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/asm3.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/testd.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/perf.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/tim.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/hmac.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/calcul.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/bs1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/rand.c",
+		"/C/Users/a049689/Desktop/file.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/time1.c",
+		"/C/Users/a049689/Desktop/file2.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/prog1.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/hell2.c",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/pproxy2.js",
+		"/C/Users/a049689/Desktop/VIRTUAL/BTC/BUN.c"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 118.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 52.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SFTP":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/C++/C Single File.sublime-build",
+	"project": "test3.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"C:\\Users\\a049689\\Desktop\\VIRTUAL\\cc3.c"
+			],
+			[
+				"stru",
+				"BTC\\struct.c"
+			],
+			[
+				"asm",
+				"BTC\\asm3.c"
+			],
+			[
+				"curl",
+				"BTC\\CRISTI\\curl1.c"
+			],
+			[
+				"mystr",
+				"C:\\Users\\a049689\\Desktop\\VIRTUAL\\mystrcpy.c"
+			],
+			[
+				"config.s",
+				"BTC\\node_modules\\npm\\lib\\config.js"
+			],
+			[
+				"heade",
+				"BTC\\header.h"
+			],
+			[
+				"sha",
+				"BTC\\CRISTI\\sha256.c"
+			],
+			[
+				"sock",
+				"BTC\\CRISTI\\sock.c"
+			],
+			[
+				"time",
+				"BTC\\time1.c"
+			],
+			[
+				"fib",
+				"C:\\Users\\a049689\\Desktop\\tcc\\fibx.c"
+			],
+			[
+				"misc.c",
+				"BTC\\CRISTI\\misc.c"
+			],
+			[
+				"chec",
+				"BTC\\CRISTI\\check.c"
+			],
+			[
+				"mail",
+				"BTC\\mail.js"
+			],
+			[
+				"rewo",
+				"BTC\\rework1.js"
+			],
+			[
+				"fix",
+				"BTC\\CRISTI\\fix2.js"
+			],
+			[
+				"rew",
+				"BTC\\rework1.js"
+			],
+			[
+				"addr",
+				"C:\\Users\\a049689\\Desktop\\VIRTUAL\\addr.c"
+			],
+			[
+				"antenn",
+				"BTC\\CRISTI\\antenne1..js"
+			],
+			[
+				"ante",
+				"BTC\\CBpro\\antenne2.js"
+			],
+			[
+				"trader_REFACUT.py",
+				"BTC\\trader_refacut.py"
+			],
+			[
+				"trader",
+				"BTC\\traderx.py"
+			],
+			[
+				"proxy_wi",
+				"BTC\\pproxy_win.js"
+			],
+			[
+				"reconn",
+				"BTC\\reconnect1.js"
+			],
+			[
+				"ppro",
+				"BTC\\pproxy3.js"
+			],
+			[
+				"async",
+				"BTC\\async2.js"
+			],
+			[
+				"asy",
+				"BTC\\async1.py"
+			],
+			[
+				"callba",
+				"BTC\\Lib\\site-packages\\keras\\callbacks.py"
+			],
+			[
+				"antenne",
+				"BTC\\CBpro\\antenne2.js"
+			],
+			[
+				"wbs",
+				"BTC\\wbs2.js"
+			],
+			[
+				"webs",
+				"BTC\\websocket_node.js"
+			],
+			[
+				"cyt",
+				"BTC\\cyth1.py"
+			],
+			[
+				"file.xt",
+				"BTC\\file.txt"
+			],
+			[
+				"pprx",
+				"BTC\\pproxy3.js"
+			],
+			[
+				"prox",
+				"BTC\\proxy3.js"
+			],
+			[
+				"tradin",
+				"BTC\\CRISTI\\trading.js"
+			],
+			[
+				"anten",
+				"BTC\\CBpro\\antenne2.js"
+			],
+			[
+				"trader_refa",
+				"BTC\\trader_refacut2.py"
+			],
+			[
+				"BUN",
+				"BTC\\BUN2.py"
+			],
+			[
+				"proxy2",
+				"BTC\\pproxy2.js"
+			],
+			[
+				"aantenne",
+				"BTC\\CRISTI\\node_modules\\ast-transform\\node_modules\\esprima\\test\\runner.js"
+			],
+			[
+				"proxy",
+				"BTC\\proxy1.js"
+			],
+			[
+				"trading",
+				"BTC\\CRISTI\\trading.js"
+			],
+			[
+				"trader_re",
+				"BTC\\trader_refacut.py"
+			],
+			[
+				"ant",
+				"BTC\\antenne1.py"
+			],
+			[
+				"app",
+				"BTC\\socket-io-server\\app.js"
+			],
+			[
+				"opti",
+				"BTC\\CRISTI\\opti1.js"
+			],
+			[
+				"W",
+				"BTC\\CBpro\\W.js"
+			],
+			[
+				"websoc",
+				"BTC\\websocket_node.js"
+			],
+			[
+				"webso",
+				"BTC\\websocket_nd.js"
+			],
+			[
+				"pro",
+				"BTC\\proxy.py"
+			],
+			[
+				"websocket",
+				"BTC\\CBpro\\websocket_BUN.py"
+			],
+			[
+				"WEBS",
+				"BTC\\WEBSOCKET.py"
+			],
+			[
+				"marja",
+				"BTC\\test_marja.py"
+			],
+			[
+				"STREAM",
+				"BTC\\STREAMY.py"
+			],
+			[
+				"auth",
+				"BTC\\auth.py"
+			],
+			[
+				"AUTH",
+				"BTC\\AUTHX.py"
+			],
+			[
+				"web",
+				"BTC\\WEBSOCKET.py"
+			],
+			[
+				"trader_oo",
+				"BTC\\trader_oop6.py"
+			],
+			[
+				"stream",
+				"BTC\\stream.py"
+			],
+			[
+				"decora",
+				"BTC\\exception_decorator.py"
+			],
+			[
+				"exce",
+				"BTC\\exception_decorator.py"
+			],
+			[
+				"arg",
+				"BTC\\args33.py"
+			],
+			[
+				"wrapp",
+				"BTC\\wrapper1.py"
+			],
+			[
+				"loggerx",
+				"BTC\\loggerx.py"
+			],
+			[
+				"logger",
+				"new_trader\\logger.py"
+			],
+			[
+				"trader_oop",
+				"BTC\\trader_oop6.py"
+			],
+			[
+				"LOG",
+				"BTC\\LOGX.log"
+			],
+			[
+				"meta",
+				"BTC\\metaclass.py"
+			],
+			[
+				"myd",
+				"BTC\\myDecorator.py"
+			],
+			[
+				"deco",
+				"BTC\\myDecorator.py"
+			],
+			[
+				"ex",
+				"BTC\\exception_decorator.py"
+			],
+			[
+				"trader_oop6",
+				"BTC\\trader_oop6.py"
+			],
+			[
+				"auth1",
+				"BTC\\auth1.py"
+			],
+			[
+				"con",
+				"BTC\\config.py"
+			],
+			[
+				"cbpr",
+				"new_trader\\cbpro_client.py"
+			],
+			[
+				"strea",
+				"new_trader\\stream.py"
+			],
+			[
+				"aut",
+				"new_trader\\auth.py"
+			],
+			[
+				"logg",
+				"new_trader\\logger.py"
+			],
+			[
+				"cm.p",
+				"cm.py"
+			],
+			[
+				"param",
+				"Lib\\site-packages\\scipy\\stats\\_distr_params.py"
+			],
+			[
+				"params",
+				"Lib\\site-packages\\statsmodels\\tsa\\arima\\params.py"
+			],
+			[
+				"class",
+				"Lib\\site-packages\\sklearn\\svm\\_classes.py"
+			],
+			[
+				"w",
+				"weather2.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 313.0,
+		"last_filter": "lint",
+		"selected_items":
+		[
+			[
+				"lint",
+				"linkText"
+			],
+			[
+				"random",
+				"random_wk"
+			]
+		],
+		"width": 600.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 241.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
