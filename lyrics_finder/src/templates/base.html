@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lyrics Finder</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
+  <body>
+    {% block content %} {% endblock %}
+
+    <script src="../static/script.js"></script>
+
+<script src="icecast-metadata-player-1.17.1.main.min.js"></script>
+<script>
+  const onMetadata = (metadata) => {
+    document.getElementById("metadata").innerHTML = metadata.StreamTitle;
+  };
+  const player = 
+    new IcecastMetadataPlayer(
+      "http://example.org",
+      { onMetadata }
+    );
+</script>
+<body>
+  <button onclick="player.play();"> Play </button>
+  <button onclick="player.stop();"> Stop </button>
+  <p> Now Playing: <span id="metadata"></span> </p>
+</body>
+
+
+  </body>
+</html>

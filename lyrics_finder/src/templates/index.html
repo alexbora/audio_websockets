@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+<header class="section">
+  <h1>Lyrics Finder</h1>
+  <h2 class="title-second">Find your favorite song lyrics with no hassle.</h2>
+</header>
+
+<div class="section">
+  <h2 class="form-label">Type here your query ...</h2>
+  <form class="search" action="{{ url_for("index")}}" method="post">
+      <input name="artist-input" id="artist-input" 
+       class="form-text query-bar-input" type="text" placeholder="Artist name" />
+      <input name="song-input" id="song-input" 
+       class="form-text query-bar-input" type="text" placeholder="Song title" />
+      <button type="submit" id="search-btn" class="btn btn-primary">Search</button>
+  </form>
+</div>
+{% endblock %}
