@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "name": "icecast-metadata-player",
+  "devDependencies": {
+    "icecast-metadata-player": "^1.17.1"
+  }
+}
