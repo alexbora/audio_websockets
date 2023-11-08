@@ -3,5 +3,8 @@
   "name": "icecast-metadata-player",
   "devDependencies": {
     "icecast-metadata-player": "^1.17.1"
+  },
+  "dependencies": {
+    "music-metadata-browser": "^2.5.10"
   }
 }
