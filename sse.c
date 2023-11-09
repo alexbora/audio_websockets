@@ -89,32 +89,40 @@ WSADATA wsaData;
     }
 #endif
     // Resolve the server's IP address using gethostbyname
-    serverInfo = gethostbyname(SERVER_HOSTNAME);
-    if (serverInfo == NULL) {
+    struct hostent *he = gethostbyname(SERVER_HOSTNAME);
+    if (he == NULL) {
         perror("Failed to resolve server host");
         close(clientSocket);
         return 1;
     } 
 
 
-      int i = 0;
-    while (serverInfo->h_addr_list[i] != NULL) {
-        struct in_addr addr;
-        memcpy(&addr, serverInfo->h_addr_list[i], sizeof(struct in_addr));
+    //   int i = 0;
+    // while (serverInfo->h_addr_list[i] != NULL) {
+    //     struct in_addr addr;
+    //     memcpy(&addr, serverInfo->h_addr_list[i], sizeof(struct in_addr));
 
-        printf("IP Address %d: %s\n", i + 1, inet_ntoa(addr));
-        i++;
-    }
+    //     printf("IP Address %d: %s\n", i + 1, inet_ntoa(addr));
+    //     i++;
+    // }
 
 
-    // Configure the server address
-    memset((char *)&serverAddress,'\0', sizeof(serverAddress));
-    serverAddress.sin_family = AF_INET;
-    memcpy((char *)serverInfo->h_addr, (char *)&serverAddress.sin_addr.s_addr, serverInfo->h_length);
-    serverAddress.sin_port = htons(SERVER_PORT);
+    // // Configure the server address
+    // memset((char *)&serverAddress,'\0', sizeof(serverAddress));
+    // serverAddress.sin_family = AF_INET;
+    // memcpy((char *)serverInfo->h_addr, (char *)&serverAddress.sin_addr.s_addr, serverInfo->h_length);
+    // serverAddress.sin_port = htons(SERVER_PORT);
+
+    struct sockaddr_in proxyAddress;
+    proxyAddress.sin_family = AF_INET;
+    proxyAddress.sin_port = htons(8080);  // Proxy port (replace with your proxy port)
+    memcpy(&proxyAddress.sin_addr.s_addr, he->h_addr, he->h_length);
+
+    // proxyAddress.sin_addr.s_addr = inet_addr("153.112.38.40");  // Proxy IP address
+
 
     // Connect to the server
-    if (connect(clientSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) == -1) {
+    if (connect(clientSocket, (struct sockaddr *)&proxyAddress, sizeof(proxyAddress)) == -1) {
         perror("Server connection failed");
         close(clientSocket);
         return 1;
@@ -129,7 +137,7 @@ WSADATA wsaData;
                              "Connection: keep-alive\r\n"
                              "Content-Type: text/event-stream\r\n\r\n";
     
-    if (write(clientSocket, sseRequest, strlen(sseRequest)) == -1) {
+    if (write(clientSocket, auth_header, strlen(auth_header)) == -1) {
         perror("SSE request failed");
         return 1;
     }
