@@ -2,7 +2,7 @@
 * @Author: Alex Bora
 * @Date:   2023-11-09 19:43:16
 * @Last Modified by:   a049689
-* @Last Modified time: 2023-11-09 20:07:15
+* @Last Modified time: 2023-11-09 21:11:19
 */
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
@@ -19,6 +19,12 @@
 #include <openssl/pem.h>
 
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
+
+int setSocketNonBlocking(SOCKET sockfd) {
+    unsigned long nonBlocking = 1;
+    return ioctlsocket(sockfd, FIONBIO, &nonBlocking);
+}
+
 
 char *base64_encode(const char *input, int length) {
     BIO *bio, *b64;
@@ -46,10 +52,23 @@ char *base64_encode(const char *input, int length) {
 
     return buff;
 }
+void initOpenSSL() {
+    SSL_library_init();
+    SSL_load_error_strings();
+    OpenSSL_add_all_algorithms();
+}
 
+void cleanupOpenSSL() {
+    EVP_cleanup();
+}
+void printOpenSSLError() {
+    ERR_print_errors_fp(stderr);
+}
 
 
 int main() {
+	 initOpenSSL();
+
     // Initialize Winsock
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
@@ -89,14 +108,22 @@ int main() {
     }
 
 
+
 	const char* username = "a049689", *password = "SummicronSummilux-50";
     char auth_string[256], auth_header[1024], *base64_auth;
     snprintf(auth_string, sizeof(auth_string), "%s:%s", username, password);
     base64_auth = base64_encode(auth_string, strlen(auth_string));
-    snprintf(auth_header, sizeof(auth_header), "CONNECT www.antenne.de:443 HTTP/1.1\r\nHost: www.antenne.de:443\r\n");
+    snprintf(auth_header, sizeof(auth_header), "CONNECT HTTP/1.1\r\n");
     sprintf(auth_header+strlen(auth_header), "Proxy-Authorization: Basic %s\r\n%s\r\n\r\n", base64_auth, "Proxy-Connection: Keep-Alive");
 
-puts(auth_header);
+
+
+ // const char *request = "GET /api/metadata/now/chillout HTTP/1.1\r\n"
+ //                          "Host: www.antenne.de\r\n"
+ //                          "Accept: text/event-stream\r\n"
+ //                          "\r\n";
+
+
 
  const char *request = "GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n";
 
