@@ -94,7 +94,18 @@ WSADATA wsaData;
         perror("Failed to resolve server host");
         close(clientSocket);
         return 1;
+    } 
+
+
+      int i = 0;
+    while (serverInfo->h_addr_list[i] != NULL) {
+        struct in_addr addr;
+        memcpy(&addr, serverInfo->h_addr_list[i], sizeof(struct in_addr));
+
+        printf("IP Address %d: %s\n", i + 1, inet_ntoa(addr));
+        i++;
     }
+
 
     // Configure the server address
     memset((char *)&serverAddress,'\0', sizeof(serverAddress));
