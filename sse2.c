@@ -15,6 +15,14 @@ size_t sseCallback(void* contents, size_t size, size_t nmemb, void* userp) {
     return totalSize;
 }
 
+int debug_callback(CURL *handle, curl_infotype type, char *data, size_t size, void *userptr) {
+    // Print only header information
+    if (type == CURLINFO_HEADER_OUT) {
+        fwrite(data, 1, size, stderr);
+    }
+    return 0;
+}
+
 int main() {
     CURL* curl;
     CURLcode res;
@@ -30,7 +38,11 @@ int main() {
     curl_easy_setopt(curl, CURLOPT_URL, "https://www.antenne.de/api/metadata/now/chillout");
 curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
     // Set the callback function to process SSE data
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, sseCallback);
+    // curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, sseCallback);
+
+
+  curl_easy_setopt(curl, CURLOPT_DEBUGFUNCTION, debug_callback);
+    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
 
     // curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);

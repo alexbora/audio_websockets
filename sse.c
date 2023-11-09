@@ -150,5 +150,9 @@ WSADATA wsaData;
 
     // Close the connection
     close(clientSocket);
+    #ifdef _WIN32 
+    closesocket(clientSocket); 
+    WSACleanup();
+    #endif
     return 0;
 }
