@@ -18,7 +18,7 @@ size_t sseCallback(void* contents, size_t size, size_t nmemb, void* userp) {
 int main() {
     CURL* curl;
     CURLcode res;
-while(1){
+
     // Initialize libcurl
     curl = curl_easy_init();
     if (!curl) {
@@ -31,8 +31,15 @@ while(1){
 curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
     // Set the callback function to process SSE data
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, sseCallback);
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+
+
+    // curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+    // curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+
+curl_easy_setopt(curl, CURLOPT_PROXY, "pxgot1-onprem.srv.volvo.com:8080");
+  curl_easy_setopt(curl, CURLOPT_PROXYUSERPWD, "a049689:SummicronSummilux-50");
+  curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
 curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L); 
 curl_easy_setopt(curl, CURLOPT_FORBID_REUSE, 0L);
   curl_easy_setopt(curl, CURLOPT_TIMEOUT, 0L);
@@ -83,8 +90,7 @@ curl_multi_remove_handle(multi_handle, curl);
         // Cleanup and close the curl handle
         curl_slist_free_all(headers);
         curl_easy_cleanup(curl);
-Sleep(5000);
-}
+
 
     return 0;
 }

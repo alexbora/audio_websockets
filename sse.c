@@ -6,9 +6,40 @@
 #include <unistd.h>
 #include <winsock2.h>
 #include <ws2tcpip.h> 
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
+#include <openssl/pem.h>
 
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 
+char *base64_encode(const char *input, int length) {
+    BIO *bio, *b64;
+    BUF_MEM *bptr;
+
+    b64 = BIO_new(BIO_f_base64());
+    bio = BIO_new(BIO_s_mem());
+    bio = BIO_push(b64, bio);
+
+    BIO_write(bio, input, length);
+    BIO_flush(bio);
+
+    BIO_get_mem_ptr(bio, &bptr);
+
+    char *buff = (char *)malloc(bptr->length);
+    if (buff == NULL) {
+        perror("Memory allocation error");
+        exit(EXIT_FAILURE);
+    }
+
+    memcpy(buff, bptr->data, bptr->length - 1);
+    buff[bptr->length - 1] = 0;
+
+    BIO_free_all(bio);
+
+    return buff;
+}
 
 
 int main() {
@@ -16,6 +47,22 @@ int main() {
     struct hostent *serverInfo;
     const char *SERVER_HOSTNAME = "pxgot1-onprem.srv.volvo.com";
     int SERVER_PORT = 8080;  // Replace with your destination port
+
+const char* username = "a049689";
+const char* password = "SummicronSummilux-50";
+char auth_string[256];
+    snprintf(auth_string, sizeof(auth_string), "%s:%s", username, password);
+    const char *base64_auth = base64_encode(auth_string, strlen(auth_string));
+// const char* base64Credentials = base64Encode(auth_string); // Base64 encoding function is not included in this code
+char auth_header[256];
+    snprintf(auth_header, sizeof(auth_header), "Proxy-Authorization: Basic %s\r\n", base64_auth);
+
+printf("%s\n", auth_header);
+
+const char* request_proxy = "GET http://example.com/ HTTP/1.1\r\n"
+                     "Host: example.com\r\n"
+                     "Proxy-Authorization: Basic base64Credentials\r\n\r\n";
+
 
 #ifdef _WIN32
 WSADATA wsaData;
