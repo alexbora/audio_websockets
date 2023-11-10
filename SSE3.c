@@ -2,7 +2,7 @@
 * @Author: Alex Bora
 * @Date:   2023-11-09 19:43:16
 * @Last Modified by:   a049689
-* @Last Modified time: 2023-11-10 20:50:50
+* @Last Modified time: 2023-11-10 21:10:49
 */ 
 
 #include "config.h"
@@ -168,7 +168,20 @@ void info_callback(const SSL *ssl, int type, int val) {
     printf("SSL Info Callback - Type: %s, Val: %s\n", type_str, val_str);
 }
 
+typedef struct { 
+int sock;
+SSL *ssl;
+} Connection; 
+
+
+Connection init(int sock, SSL *ssl){ 
+Connection conn = { sock, ssl};
+return conn;
+}
+
 int main() {
+Connection conn = init(1, NULL);
+
 	char hostName[256]; // Adjust the size as needed
 	   if (getHostName(hostName, sizeof(hostName))) {
         printf("Host machine name: %s\n", hostName);}
