@@ -2,7 +2,7 @@
 * @Author: Alex Bora
 * @Date:   2023-11-09 19:43:16
 * @Last Modified by:   a049689
-* @Last Modified time: 2023-11-10 07:56:07
+* @Last Modified time: 2023-11-10 08:35:01
 */ 
 
 #include "config.h"
@@ -24,7 +24,7 @@
 #include <openssl/ssl.h>
 #include <openssl/bio.h>
 #include <openssl/err.h>
-#pragma comment(lib,"ws2_32.lib") //Winsock Library
+// #pragma comment(lib,"ws2_32.lib") //Winsock Library
 
 char *base64_encode(const char *input, int length) {
     BIO *bio, *b64;

@@ -3,6 +3,21 @@
 
 MACHINE_NAME := $(shell hostname)
 
+ifeq ($(OS),Windows_NT)
+    UNAME_S := Windows
+else
+    UNAME_S := $(shell uname -s)
+endif
+
+
+CFLAGS :=-Wall -Wextra -std=c11
+LIBS :=-lssl -lcrypto -lcurl
+
+ifeq ($(UNAME_S),Windows)
+    LIBS +=-lws2_32
+endif
+
+
 .PHONY: all clean
 
 all: sse3
@@ -16,7 +31,7 @@ config.h:
 	@echo "#endif" >> config.h
 
 sse3: config.h SSE3.c
-	gcc -o $@ SSE3.c -lssl -lws2_32 -lcrypto -lcurl -lws2_32
+	gcc $(CFLAGS) $(LIBS) SSE3.c -lws2_32 -lssl -lcrypto -lcurl -o sse3.exe
 
 clean:
-	rm -f sse3 config.h
+	rm -f sse3 sse3.exe config.h
