@@ -2,7 +2,7 @@
 * @Author: Alex Bora
 * @Date:   2023-11-09 19:43:16
 * @Last Modified by:   a049689
-* @Last Modified time: 2023-11-10 11:53:41
+* @Last Modified time: 2023-11-10 18:17:10
 */ 
 
 #include "config.h"
@@ -106,7 +106,9 @@ int main() {
 	char hostName[256]; // Adjust the size as needed
 	   if (getHostName(hostName, sizeof(hostName))) {
         printf("Host machine name: %s\n", hostName);}
-	 initOpenSSL();
+	 
+
+     initOpenSSL();
     // Initialize Winsock for Windows
 #ifdef _WIN32
     WSADATA wsa;
@@ -157,9 +159,17 @@ int main() {
         return 1;
     }
 
- if (setSocketNonBlocking(sockfd) < 0) {
-        fprintf(stderr, "Error setting socket to non-blocking\n");
+
+    // Create a BIO for the socket
+    BIO *bio = BIO_new_socket(sockfd, BIO_NOCLOSE);
+
+    // Create an SSL context
+    SSL_CTX *ctx = SSL_CTX_new(SSLv23_client_method());
+    if (!ctx) {
+        fprintf(stderr, "Error creating SSL context\n");
+        printOpenSSLError();
         close(sockfd);
+        BIO_free_all(bio);
         cleanupOpenSSL();
 #ifdef _WIN32
         WSACleanup();
@@ -167,15 +177,59 @@ int main() {
         return 1;
     }
 
+    // Set SNI callback
+    SSL_CTX_set_tlsext_servername_callback(ctx, sniCallback);
+
+    // Create an SSL structure
+    SSL *ssl = SSL_new(ctx);
+    if (!ssl) {
+        fprintf(stderr, "Error creating SSL structure\n");
+        printOpenSSLError();
+        SSL_CTX_free(ctx);
+        close(sockfd);
+        BIO_free_all(bio);
+        cleanupOpenSSL();
+#ifdef _WIN32
+        WSACleanup();
+#endif
+        return 1;
+    }
+
+    // Set the file descriptor for the SSL connection
+    if (SSL_set_fd(ssl, sockfd) != 1) {
+        fprintf(stderr, "Error setting file descriptor for SSL connection\n");
+        printOpenSSLError();
+        SSL_free(ssl);
+        SSL_CTX_free(ctx);
+        close(sockfd);
+        BIO_free_all(bio);
+        cleanupOpenSSL();
+#ifdef _WIN32
+        WSACleanup();
+#endif
+        return 1;
+    }
+
+
+
+
+
+
+
+
+
+
+
+#ifdef USE_PROXY
 	const char* username = "a049689", *password = "SummicronSummilux-50";
     char auth_string[256], auth_header[1024], *base64_auth;
     snprintf(auth_string, sizeof(auth_string), "%s:%s", username, password);
     base64_auth = base64_encode(auth_string, strlen(auth_string));
-    snprintf(auth_header, sizeof(auth_header), "CONNECT HTTP/1.1\r\n");
+    snprintf(auth_header, sizeof(auth_header), "GET / HTTP/1.1\r\nHost: www.example.com\r\n");
     sprintf(auth_header+strlen(auth_header), "Proxy-Authorization: Basic %s\r\n%s\r\n\r\n", base64_auth, "Proxy-Connection: Keep-Alive");
 
-puts(auth_header);
-
+    puts(auth_header);
+#endif
  // const char *request = "GET /api/metadata/now/chillout HTTP/1.1\r\n"
  //                          "Host: www.antenne.de\r\n"
  //                          "Accept: text/event-stream\r\n"
@@ -183,10 +237,12 @@ puts(auth_header);
 
 
 
- const char *request = "GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n";
+
+
+ // const char *request = "GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n";
 
     // Send the request
-    int bytesSent = send(sockfd, request, strlen(request), 0);
+    int bytesSent = send(sockfd, auth_header, strlen(auth_header), 0);
     if (bytesSent == SOCKET_ERROR) {
         fprintf(stderr, "Error sending request: %d\n", WSAGetLastError());
     } else if (bytesSent == 0) {
