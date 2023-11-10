@@ -32,6 +32,7 @@ config.h:
 
 sse3: config.h SSE3.c
 	gcc $(CFLAGS) $(LIBS) SSE3.c -lws2_32 -lssl -lcrypto -lcurl -o sse3.exe
+	echo $(OS)
 
 clean:
 	rm -f sse3 sse3.exe config.h
