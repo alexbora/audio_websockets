@@ -2,8 +2,10 @@
 * @Author: Alex Bora
 * @Date:   2023-11-09 19:43:16
 * @Last Modified by:   a049689
-* @Last Modified time: 2023-11-09 23:19:41
-*/
+* @Last Modified time: 2023-11-10 07:56:07
+*/ 
+
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

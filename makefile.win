@@ -1,0 +1,22 @@
+
+# Makefile
+
+MACHINE_NAME := $(shell hostname)
+
+.PHONY: all clean
+
+all: sse3
+
+config.h:
+	@echo "#ifndef CONFIG_H" > config.h
+	@echo "#define CONFIG_H" >> config.h
+	@if [ "$(shell echo $(MACHINE_NAME) | grep -q '^RO' && echo yes)" = "yes" ]; then \
+        echo "#define USE_PROXY (1)" >> config.h; \
+    fi
+	@echo "#endif" >> config.h
+
+sse3: config.h SSE3.c
+	gcc -o $@ SSE3.c -lssl -lws2_32 -lcrypto -lcurl -lws2_32
+
+clean:
+	rm -f sse3 config.h
