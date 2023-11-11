@@ -2,7 +2,7 @@
 * @Author: Alex Bora
 * @Date:   2023-11-09 19:43:16
 * @Last Modified by:   a049689
-* @Last Modified time: 2023-11-11 10:23:47
+* @Last Modified time: 2023-11-11 18:45:23
 */ 
 
 #include "config.h"
@@ -179,6 +179,36 @@ Connection conn = { sock, ssl};
 return conn;
 }
 
+void handleErrors() {
+    ERR_print_errors_fp(stderr);
+    exit(EXIT_FAILURE);
+}
+
+#ifndef _WIN32
+int waitForData(int sockfd) {
+    fd_set readfds;
+    struct timeval timeout;
+
+    FD_ZERO(&readfds);
+    FD_SET(sockfd, &readfds);
+
+    timeout.tv_sec = 5; // Set the timeout (5 seconds in this example)
+    timeout.tv_usec = 0;
+
+    return select(sockfd + 1, &readfds, NULL, NULL, &timeout);
+}
+#endif
+
+#ifdef _WIN32
+int waitForDataWindows(SOCKET sockfd, WSAEVENT event) {
+    DWORD result = WSAWaitForMultipleEvents(1, &event, FALSE, 5000, FALSE);
+    if (result == WSA_WAIT_FAILED) {
+        handleErrors();
+    }
+    return (result == WSA_WAIT_TIMEOUT) ? 0 : 1;
+}
+#endif
+
 int main() {
 Connection conn = init(1, NULL);
 
@@ -302,41 +332,83 @@ SSL_CTX_set_info_callback(ctx, info_callback);
     char auth_string[256], auth_header[1024], *base64_auth;
     snprintf(auth_string, sizeof(auth_string), "%s:%s", username, password);
     base64_auth = base64_encode(auth_string, strlen(auth_string));
-    snprintf(auth_header, sizeof(auth_header), "GET /api/metadata/now/chillout HTTP/1.1\r\nHost: antenne.de\r\n");
+       snprintf(auth_header, sizeof(auth_header), "CONNECT antenne.de:443 HTTP/1.1\r\nHost: antenne.de\r\n");
+       // snprintf(auth_header, sizeof(auth_header), "GET / HTTP/1.1\r\nHost: example.org\r\n");
     sprintf(auth_header+strlen(auth_header), "Proxy-Authorization: Basic %s\r\n%s\r\n%s\r\n\r\n", base64_auth, "Proxy-Connection: Keep-Alive", "Content-Type: text/event-stream");
-
+    send(sockfd, auth_header, strlen(auth_header), 0);
+char rsp[1024];
+    recv(sockfd, rsp, sizeof(rsp) - 1, 0);
+ 
     puts(auth_header);
 #endif
- // const char *request = "GET /api/metadata/now/chillout HTTP/1.1\r\n"
- //                          "Host: www.antenne.de\r\n"
- //                          "Accept: text/event-stream\r\n"
- //                          "\r\n";
+ const char *request = "GET /api/metadata/now/chillout HTTP/1.1\r\n"
+                          "Host: www.antenne.de\r\n"
+                          "Accept: text/event-stream\r\n"
+                          "\r\n";
 
 
 
 
-//     int sslStatus;
-//     while ((sslStatus = SSL_connect(ssl)) != 1) {
-//         int sslError = SSL_get_error(ssl, sslStatus);
-//         if (sslError == SSL_ERROR_WANT_READ || sslError == SSL_ERROR_WANT_WRITE) {
-//             // The SSL handshake is still in progress
-//             continue;
-//         } else {
-//             fprintf(stderr, "SSL handshake failed: %d\n", sslError);
-//             printOpenSSLError();
-//             SSL_free(ssl);
-//             SSL_CTX_free(ctx);
-//             close(sockfd);
-//             BIO_free_all(bio);
-//             cleanupOpenSSL();
-// #ifdef _WIN32
-//             WSACleanup();
-// #endif
-//             return 1;
-//         }
-//     }
+    int sslStatus;
+    while ((sslStatus = SSL_connect(ssl)) != 1) {
+        int sslError = SSL_get_error(ssl, sslStatus);
+        if (sslError == SSL_ERROR_WANT_READ || sslError == SSL_ERROR_WANT_WRITE) {
+            // The SSL handshake is still in progress
+            continue;
+        } else {
+            fprintf(stderr, "SSL handshake failed: %d\n", sslError);
+            printOpenSSLError();
+            SSL_free(ssl);
+            SSL_CTX_free(ctx);
+            close(sockfd);
+            BIO_free_all(bio);
+            cleanupOpenSSL();
+#ifdef _WIN32
+            WSACleanup();
+#endif
+            return 1;
+        }
+    }
+
+SSL_write(ssl, request, strlen(request));
+memset(rsp, '\0', sizeof(rsp)); 
+SSL_read(ssl, rsp, sizeof(rsp)); 
+puts(rsp); 
+  
+
+  int bytes;
+//   while ((bytes = SSL_read(ssl, rsp, sizeof(rsp) - 1)) > 0) {
+//         rsp[bytes] = '\0';
+//         int sslError = SSL_get_error(ssl, bytes);
+//         printf("%d\n",sslError );
+//         printf("Received: %s\n", rsp);
+// } 
+
+#ifdef _WIN32
+    // Create an event for waiting on the socket
+    WSAEVENT event = WSACreateEvent();
+    if (event == WSA_INVALID_EVENT) {
+        handleErrors();
+    }
+    // Associate the event with the socket
+    if (WSAEventSelect(SSL_get_fd(ssl), event, FD_READ) == SOCKET_ERROR) {
+        handleErrors();
+    }
+#endif
+
+while(1){  
+    #ifdef _WIN32
+            int result = waitForDataWindows(SSL_get_fd(ssl), event);
+#else
+            int result = waitForData(SSL_get_fd(ssl));
+#endif
+ if(result) SSL_read(ssl, rsp, sizeof(rsp) - 1);
+
+}
 
 
+
+return 0;
 
  // const char *request = "GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n";
 
