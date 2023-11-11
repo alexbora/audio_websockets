@@ -20,7 +20,7 @@ endif
 
 .PHONY: all clean
 
-all: sse3
+all: sse3 sse3_ok
 
 config.h:
 	@echo "#ifndef CONFIG_H" > config.h
@@ -30,9 +30,12 @@ config.h:
     fi
 	@echo "#endif" >> config.h
 
-sse3: config.h SSE3.c
+sse3: config.h SSE3.c 
 	gcc $(CFLAGS) $(LIBS) SSE3.c -lws2_32 -lssl -lcrypto -lcurl -o sse3.exe
-	echo $(OS)
+
+sse3_ok: SSE3_ok.c
+	gcc $(CFLAGS) $(LIBS) SSE3_ok.c -lws2_32 -lssl -lcrypto -lcurl -o sse3_ok.exe
+
 
 clean:
-	rm -f sse3 sse3.exe config.h
+	rm -f sse3 sse3.exe sse3_ok.c config.h
