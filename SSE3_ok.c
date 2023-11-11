@@ -2,7 +2,7 @@
 * @Author: Alex Bora
 * @Date:   2023-11-09 19:43:16
 * @Last Modified by:   a049689
-* @Last Modified time: 2023-11-11 18:45:23
+* @Last Modified time: 2023-11-11 19:04:18
 */ 
 
 #include "config.h"
@@ -201,13 +201,48 @@ int waitForData(int sockfd) {
 
 #ifdef _WIN32
 int waitForDataWindows(SOCKET sockfd, WSAEVENT event) {
-    DWORD result = WSAWaitForMultipleEvents(1, &event, FALSE, 5000, FALSE);
+    DWORD result = WSAWaitForMultipleEvents(1, &event, FALSE, INFINITE, FALSE);
     if (result == WSA_WAIT_FAILED) {
         handleErrors();
     }
     return (result == WSA_WAIT_TIMEOUT) ? 0 : 1;
 }
 #endif
+
+int boyerMooreSearch(const char *text, const char *pattern) {
+    int textLength = strlen(text);
+    int patternLength = strlen(pattern);
+
+    // Initialize bad character heuristic array
+    int badChar[256];
+    for (int i = 0; i < 256; i++) {
+        badChar[i] = patternLength;
+    }
+    for (int i = 0; i < patternLength - 1; i++) {
+        badChar[(unsigned char)pattern[i]] = patternLength - 1 - i;
+    }
+
+    // Search using Boyer-Moore
+    int i = patternLength - 1;
+    while (i < textLength) {
+        int j = patternLength - 1;
+        while (j >= 0 && text[i] == pattern[j]) {
+            i--;
+            j--;
+        }
+        if (j < 0) {
+            // Pattern found
+            return i + 1;
+        } else {
+            // Shift based on bad character heuristic
+            i += badChar[(unsigned char)text[i]];
+        }
+    }
+
+    // Pattern not found
+    return -1;
+}
+
 
 int main() {
 Connection conn = init(1, NULL);
@@ -373,8 +408,11 @@ char rsp[1024];
 SSL_write(ssl, request, strlen(request));
 memset(rsp, '\0', sizeof(rsp)); 
 SSL_read(ssl, rsp, sizeof(rsp)); 
-puts(rsp); 
-  
+// puts(rsp); 
+
+int res = boyerMooreSearch(rsp, "artist"); 
+ if (res != -1) 
+        printf("Pattern found at position: %d\n%s\n", res, rsp+res);  
 
   int bytes;
 //   while ((bytes = SSL_read(ssl, rsp, sizeof(rsp) - 1)) > 0) {
