@@ -384,6 +384,7 @@ int main() {
       }
       printf("Read %d bytes: %s\n", ret, resp);
     }
+    sleep(3);
   }
 
   return 0;
