@@ -17,6 +17,16 @@
 #define PORT "443"
 #define PATH "/api/metadata/now/chillout"
 
+typedef struct {
+  unsigned char *data;
+  size_t len;
+} Buffer;
+
+typedef struct {
+  Buffer artist;
+  Buffer title;
+} Metadata;
+
 void init_openssl();
 void cleanup_openssl();
 SSL_CTX *create_context();
@@ -24,12 +34,20 @@ int create_socket(const char *host, const char *port);
 SSL *create_ssl(SSL_CTX *ctx, int sockfd);
 void ssl_handshake(SSL *ssl);
 void send_request(SSL *ssl, const char *path, const char *host);
-void read_response(SSL *ssl);
+void read_response(SSL *ssl, Metadata *);
 int boyerMooreSearch(char *text, int textLength, char *pattern,
                      int patternLength);
 
+void flushSocket(int sockfd) {
+  char flushBuffer[1024];
+  while (recv(sockfd, flushBuffer, sizeof(flushBuffer), MSG_DONTWAIT) > 0)
+    ;
+}
+
 int main() {
-  /* init_openssl(); */
+  Metadata metadata;
+
+  init_openssl();
 
   // Create SSL context and set up the socket
   SSL_CTX *ctx = create_context();
@@ -45,7 +63,8 @@ int main() {
   // Read the response every 5 seconds
   while (1) {
     send_request(ssl, PATH, HOST);
-    read_response(ssl);
+    read_response(ssl, &metadata);
+    puts(metadata.title.data);
     sleep(5);
   }
 
@@ -81,7 +100,7 @@ SSL_CTX *create_context() {
 
 int create_socket(const char *host, const char *port) {
   struct addrinfo hints, *result, *rp;
-  int sockfd;
+  int sockfd = -1;
 
   memset(&hints, 0, sizeof(struct addrinfo));
   hints.ai_family = AF_UNSPEC;
@@ -133,7 +152,8 @@ void ssl_handshake(SSL *ssl) {
 }
 
 void send_request(SSL *ssl, const char *path, const char *host) {
-  char request[1024];
+  char request[1024] = {0};
+
   snprintf(request, sizeof(request),
            "GET %s HTTP/1.1\r\nHost: %s\r\nConnection: keep-alive\r\n\r\n",
            path, host);
@@ -144,19 +164,35 @@ void send_request(SSL *ssl, const char *path, const char *host) {
   }
 }
 
-void read_response(SSL *ssl) {
-  char buffer[1024];
+void read_response(SSL *ssl, Metadata *metadata) {
+  char buffer[1024] = {0};
+  memset(buffer, 0, sizeof(buffer));
   int bytes_received;
+
+  // int sockfd = SSL_get_fd(ssl); // Get socket connection
+  // flushSocket(sockfd);
 
   bytes_received = SSL_read(ssl, buffer, sizeof(buffer) - 1);
 
   if (bytes_received > 0) {
     buffer[bytes_received] = '\0';
+
     int artistIndex =
         boyerMooreSearch(buffer, bytes_received, "artist", strlen("artist"));
 
-    if (artistIndex != -1)
-      printf("Received response:\n%s\n", buffer + artistIndex);
+    if (artistIndex != -1) {
+      // printf("Received response:\n%s\n", buffer + artistIndex);
+      char *p = buffer + artistIndex;
+      while (*p++ != ':')
+        ;
+      metadata->title.data = p;
+      char *r = p;
+      int i = 0;
+      while (*r++ != ',')
+        i++;
+      metadata->title.data[i] = '\0';
+    }
+
   } else if (bytes_received == 0) {
     fprintf(stderr, "Server closed the connection\n");
     exit(EXIT_SUCCESS);
