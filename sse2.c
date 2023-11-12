@@ -97,7 +97,7 @@ curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     curl_easy_cleanup(curl);
 
 curl_multi_remove_handle(multi_handle, curl);
-        curl_multi_cleanup(multi_handle);
+ curl_multi_cleanup(multi_handle);
 
         // Cleanup and close the curl handle
         curl_slist_free_all(headers);
