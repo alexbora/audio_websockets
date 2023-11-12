@@ -25,6 +25,8 @@ SSL *create_ssl(SSL_CTX *ctx, int sockfd);
 void ssl_handshake(SSL *ssl);
 void send_request(SSL *ssl, const char *path, const char *host);
 void read_response(SSL *ssl);
+int boyerMooreSearch(char *text, int textLength, char *pattern,
+                     int patternLength);
 
 int main() {
   /* init_openssl(); */
@@ -150,7 +152,11 @@ void read_response(SSL *ssl) {
 
   if (bytes_received > 0) {
     buffer[bytes_received] = '\0';
-    printf("Received response:\n%s\n", buffer);
+    int artistIndex =
+        boyerMooreSearch(buffer, bytes_received, "artist", strlen("artist"));
+
+    if (artistIndex != -1)
+      printf("Received response:\n%s\n", buffer + artistIndex);
   } else if (bytes_received == 0) {
     fprintf(stderr, "Server closed the connection\n");
     exit(EXIT_SUCCESS);
@@ -158,4 +164,40 @@ void read_response(SSL *ssl) {
     fprintf(stderr, "Error reading response\n");
     exit(EXIT_FAILURE);
   }
+}
+
+int boyerMooreSearch(char *text, int textLength, char *pattern,
+                     int patternLength) {
+  int badChar[256];
+
+  // Preprocess the bad character heuristic array
+  for (int i = 0; i < 256; i++)
+    badChar[i] = patternLength;
+
+  for (int i = 0; i < patternLength - 1; i++)
+    badChar[(unsigned char)pattern[i]] = patternLength - 1 - i;
+
+  // Boyer-Moore search algorithm
+  int s = 0; // Shift of the pattern with respect to the text
+
+  while (s <= (textLength - patternLength)) {
+    int j = patternLength - 1;
+
+    // Keep reducing the index j of the pattern while characters of the pattern
+    // and text are matching
+    while (j >= 0 && pattern[j] == text[s + j])
+      j--;
+
+    // If the pattern is present at the current shift, return the index
+    if (j < 0) {
+      return s;
+    } else {
+      // Shift the pattern based on the bad character heuristic
+      s += badChar[(unsigned char)text[s + j]] > patternLength - 1 - j
+               ? badChar[(unsigned char)text[s + j]]
+               : patternLength - 1 - j;
+    }
+  }
+
+  return -1; // Pattern not found
 }
