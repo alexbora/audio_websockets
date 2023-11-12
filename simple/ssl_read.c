@@ -181,14 +181,14 @@ void read_response(SSL *ssl, Metadata *metadata) {
         boyerMooreSearch(buffer, bytes_received, "artist", strlen("artist"));
 
     if (artistIndex != -1) {
-      // printf("Received response:\n%s\n", buffer + artistIndex);
+      printf("Received response:\n%s\n", buffer + artistIndex);
       char *p = buffer + artistIndex;
       while (*p++ != ':')
         ;
-      metadata->title.data = p;
-      char *r = p;
+      metadata->title.data = p + 1;
+      char *r = p+1;
       int i = 0;
-      while (*r++ != ',')
+      while (*r++ != '"')
         i++;
       metadata->title.data[i] = '\0';
     }
