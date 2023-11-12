@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>SSE</title>
+  </head>
+
+  <body>
+    <ul id="response-list">
+      <!-- new content appears here -->
+    </ul>
+  </body>
+
+  <script>
+    const eventSource = new EventSource('http://localhost:3000');
+
+    eventSource.onmessage = function (currentEvent) {
+      const listElement = document.getElementById('response-list');
+      const newElement = document.createElement('li');
+      newElement.innerText = currentEvent.data;
+
+      listElement.appendChild(newElement);
+    };
+  </script>
+</html>
