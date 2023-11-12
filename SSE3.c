@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
+/* #include "config.h" */
 
 #ifdef _WIN32
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
@@ -29,6 +29,7 @@
 #define closesocket close
 #define ioctlsocket ioctl
 #include <fcntl.h>  // for fcntl
+#include <poll.h>
 #endif
 
 #include <openssl/bio.h>
@@ -208,8 +209,6 @@ int main() {
 
   if (sockfd < 0) {
     perror("Error in socket");
-    cleanupOpenSSL();
-    WSACleanup();
     return 1;
   }
   // Set up proxy server address
@@ -228,8 +227,6 @@ int main() {
   struct hostent *he = gethostbyname(host);  // Replace with your proxy hostname
   if (he == NULL) {
     fprintf(stderr, "Failed to resolve proxy hostname\n");
-    closesocket(sockfd);
-    WSACleanup();
     return 1;
   }
   memcpy(&proxyAddress.sin_addr.s_addr, he->h_addr, he->h_length);
@@ -238,10 +235,21 @@ int main() {
       SOCKET_ERROR) {
     fprintf(stderr, "Error in connection to the proxy: %d\n",
             WSAGetLastError());
-    closesocket(sockfd);
-    WSACleanup();
+
     return 1;
   }
+
+  /* struct addrinfo hints, *res; */
+  // first, load up address structs with getaddrinfo():
+  // memset(&hints, 0, sizeof hints);
+  // hints.ai_family = AF_UNSPEC;
+  // hints.ai_socktype = SOCK_STREAM;
+  // getaddrinfo("www.example.com", "3490", &hints, &res);
+  // make a socket:
+  // sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+  // connect!
+  // connect(sockfd, res->ai_addr, res->ai_addrlen);
+  // freeaddrinfo(res); // free the linked-list
 
   // Create a BIO for the socket
   BIO *bio = BIO_new_socket(sockfd, BIO_NOCLOSE);
@@ -348,11 +356,38 @@ int main() {
 
   // const char *request = "GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n";
   puts(request);
+
   int ret = SSL_connect(ssl);
   printf("SSL_connect returned %d\n", ret);
   ret = SSL_write(ssl, request, strlen(request));
   printf("SSL_write returned %d\n", ret);
   char resp[1024];
+
+  struct pollfd fds[1];
+  fds[0].fd = sockfd;
+  fds[0].events = POLLIN | POLL_MSG;
+
+  while (1) {
+    puts("polling");
+    int poll_ret = poll(fds, 1, -1);
+    if (poll_ret == -1) {
+      perror("poll");
+      exit(EXIT_FAILURE);
+    }
+
+    if (fds[0].revents & POLLRDNORM | POLLRDBAND | POLLPRI) {
+      ret = SSL_read(ssl, resp, sizeof(resp));
+      printf("SSL_read returned %d\n", ret);
+      if (ret == -1) {
+        perror("read");
+        exit(EXIT_FAILURE);
+      }
+      printf("Read %d bytes: %s\n", ret, resp);
+    }
+  }
+
+  return 0;
+
   do {
     ret = SSL_read(ssl, resp, sizeof(resp));
     printf("SSL_read returned %d\n", ret);
