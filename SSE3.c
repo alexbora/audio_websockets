@@ -28,7 +28,7 @@
 #define WSACleanup() (void)0
 #define closesocket close
 #define ioctlsocket ioctl
-#include <fcntl.h>  // for fcntl
+#include <fcntl.h> // for fcntl
 #include <poll.h>
 #endif
 
@@ -108,63 +108,63 @@ int getHostName(char *buffer, size_t size) {
 }
 
 void info_callback(const SSL *ssl, int type, int val) {
-  (void)ssl;  // Suppress unused parameter warning
+  (void)ssl; // Suppress unused parameter warning
 
   const char *type_str;
   const char *val_str;
 
   switch (type) {
-    case SSL_CB_LOOP:
-      type_str = "LOOP";
-      break;
-    case SSL_CB_EXIT:
-      type_str = "EXIT";
-      break;
-    case SSL_CB_READ:
-      type_str = "READ";
-      break;
-    case SSL_CB_WRITE:
-      type_str = "WRITE";
-      break;
-    case SSL_CB_ALERT:
-      type_str = "ALERT";
-      break;
-    case SSL_CB_HANDSHAKE_START:
-      type_str = "HANDSHAKE START";
-      break;
-    case SSL_CB_HANDSHAKE_DONE:
-      type_str = "HANDSHAKE DONE";
-      break;
-    default:
-      type_str = "UNKNOWN";
-      break;
+  case SSL_CB_LOOP:
+    type_str = "LOOP";
+    break;
+  case SSL_CB_EXIT:
+    type_str = "EXIT";
+    break;
+  case SSL_CB_READ:
+    type_str = "READ";
+    break;
+  case SSL_CB_WRITE:
+    type_str = "WRITE";
+    break;
+  case SSL_CB_ALERT:
+    type_str = "ALERT";
+    break;
+  case SSL_CB_HANDSHAKE_START:
+    type_str = "HANDSHAKE START";
+    break;
+  case SSL_CB_HANDSHAKE_DONE:
+    type_str = "HANDSHAKE DONE";
+    break;
+  default:
+    type_str = "UNKNOWN";
+    break;
   }
 
   switch (val) {
-    case SSL_CB_LOOP:
-      val_str = "LOOP";
-      break;
-    case SSL_CB_EXIT:
-      val_str = "EXIT";
-      break;
-    case SSL_CB_READ:
-      val_str = "READ";
-      break;
-    case SSL_CB_WRITE:
-      val_str = "WRITE";
-      break;
-    case SSL_CB_ALERT:
-      val_str = "ALERT";
-      break;
-    case SSL_CB_HANDSHAKE_START:
-      val_str = "HANDSHAKE START";
-      break;
-    case SSL_CB_HANDSHAKE_DONE:
-      val_str = "HANDSHAKE DONE";
-      break;
-    default:
-      val_str = "UNKNOWN";
-      break;
+  case SSL_CB_LOOP:
+    val_str = "LOOP";
+    break;
+  case SSL_CB_EXIT:
+    val_str = "EXIT";
+    break;
+  case SSL_CB_READ:
+    val_str = "READ";
+    break;
+  case SSL_CB_WRITE:
+    val_str = "WRITE";
+    break;
+  case SSL_CB_ALERT:
+    val_str = "ALERT";
+    break;
+  case SSL_CB_HANDSHAKE_START:
+    val_str = "HANDSHAKE START";
+    break;
+  case SSL_CB_HANDSHAKE_DONE:
+    val_str = "HANDSHAKE DONE";
+    break;
+  default:
+    val_str = "UNKNOWN";
+    break;
   }
 
   printf("SSL Info Callback - Type: %s, Val: %s\n", type_str, val_str);
@@ -181,7 +181,7 @@ Connection init(int sock, SSL *ssl) {
 }
 
 static void print_host() {
-  char hostName[256];  // Adjust the size as needed
+  char hostName[256]; // Adjust the size as needed
   if (getHostName(hostName, sizeof(hostName))) {
     printf("Host machine name: %s\n", hostName);
   }
@@ -215,7 +215,7 @@ int main() {
   struct sockaddr_in proxyAddress;
   proxyAddress.sin_family = AF_INET;
   proxyAddress.sin_port =
-      htons(PORT);  // Proxy port (replace with your proxy port)
+      htons(PORT); // Proxy port (replace with your proxy port)
 
   const char *host;
 #ifdef USE_PROXY
@@ -224,7 +224,7 @@ int main() {
   host = "www.antenne.de";
 #endif
   // Resolve hostname to IP address
-  struct hostent *he = gethostbyname(host);  // Replace with your proxy hostname
+  struct hostent *he = gethostbyname(host); // Replace with your proxy hostname
   if (he == NULL) {
     fprintf(stderr, "Failed to resolve proxy hostname\n");
     return 1;
@@ -317,14 +317,13 @@ int main() {
   puts(auth_header);
   request = auth_header;
 #else
-  request =
-      "GET /api/metadata/now/chillout HTTP/1.1\r\n"
-      "Host: antenne.de\r\n"
-      "Connection: keep-alive\r\n"
-      "Cache-Control: no-cache\r\n"
-      "Content-Type: text/event-stream\r\n"
-      "Accept: text/event-stream\r\n"
-      "\r\n";
+  request = "GET /api/metadata/now/chillout HTTP/1.1\r\n"
+            "Host: antenne.de\r\n"
+            "Connection: keep-alive\r\n"
+            "Cache-Control: no-cache\r\n"
+            "Content-Type: text/event-stream\r\n"
+            "Accept: text/event-stream\r\n"
+            "\r\n";
 
 #endif
   // const char *request = "GET /api/metadata/now/chillout HTTP/1.1\r\n"
@@ -365,7 +364,7 @@ int main() {
 
   struct pollfd fds[1];
   fds[0].fd = sockfd;
-  fds[0].events = POLLIN | POLL_MSG;
+  fds[0].events = POLLIN;
 
   while (1) {
     puts("polling");
