@@ -4,6 +4,48 @@
  * @created     : Sunday Nov 12, 2023 14:36:36 UTC
  */
 
+#ifndef _WIN32
+#define unix
+#endif
+
+#ifdef WIN32
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#include <windows.h>
+#include <winsock2.h>
+#if _WIN32_WINNT == 0x0601  // Windows 7
+#define WINDOWS_CPU_GROUPS_ENABLED 1
+#endif
+#define sleep(secs) Sleep((secs)*1000)
+#include <sys/resource.h>
+#ifdef _MSC_VER
+#define snprintf(...) _snprintf(__VA_ARGS__)
+#define strdup(...) _strdup(__VA_ARGS__)
+#define strncasecmp(x, y, z) _strnicmp(x, y, z)
+#define strcasecmp(x, y) _stricmp(x, y)
+#define __func__ __FUNCTION__
+#define __thread __declspec(thread)
+#define _ALIGN(x) __declspec(align(x))
+typedef int ssize_t;
+#include <Mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+#endif
+#endif
+
+#ifndef _MSC_VER
+#define _ALIGN(x) __attribute__((aligned(x)))
+#endif
+
+#undef unlikely
+#undef likely
+#if defined(__GNUC__) && (__GNUC__ > 2) && defined(__OPTIMIZE__)
+#define unlikely(expr) (__builtin_expect(!!(expr), 0))
+#define likely(expr) (__builtin_expect(!!(expr), 1))
+#else
+#define unlikely(expr) (expr)
+#define likely(expr) (expr)
+#endif
+
+#ifdef unix
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <openssl/err.h>
@@ -12,10 +54,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#endif
+
+#define swap_vars(a, b) \
+  a ^= b;               \
+  b ^= a;               \
+  a ^= b;
 
 #define HOST "antenne.de"
 #define PORT "443"
 #define PATH "/api/metadata/now/chillout"
+
+struct thr_info {
+  int id;
+  pthread_t pth;
+  pthread_attr_t attr;
+};
 
 typedef struct {
   unsigned char *data;
@@ -44,9 +98,13 @@ void flushSocket(int sockfd) {
     ;
 }
 
-int main() {
+static int thread_create(struct thr_info *, void *);
+
+void get_meta(void *arg) {
+  struct thr_info *thr = (struct thr_info *)arg;
   Metadata metadata;
 
+  pthread_detach(pthread_self());
   init_openssl();
 
   // Create SSL context and set up the socket
@@ -64,7 +122,7 @@ int main() {
   while (1) {
     send_request(ssl, PATH, HOST);
     read_response(ssl, &metadata);
-    printf("Now playing\tArtist: %s\tTitle: %s\n", metadata.artist.data,
+    printf("Now playing...\tArtist: %s\tTitle: %s\n", metadata.artist.data,
            metadata.title.data);
     sleep(1);
   }
@@ -75,6 +133,21 @@ int main() {
   SSL_free(ssl);
   SSL_CTX_free(ctx);
   cleanup_openssl();
+};
+
+int main() {
+  struct thr_info thr;
+  thr.id = 2;
+  thr.pth = 0;
+  pthread_attr_init(&thr.attr);
+  pthread_attr_setdetachstate(&thr.attr, PTHREAD_CREATE_DETACHED);
+
+  thread_create(&thr, get_meta);
+
+  while (1)
+    ;
+
+  pthread_cancel(thr.pth);
 
   return 0;
 }
@@ -164,7 +237,9 @@ void send_request(SSL *ssl, const char *path, const char *host) {
 }
 
 void read_response(SSL *ssl, Metadata *metadata) {
+  int i = 0, j = i;
   unsigned char buffer[1024] = {0};
+
   memset(buffer, 0, sizeof(buffer));
   int bytes_received;
 
@@ -188,21 +263,19 @@ void read_response(SSL *ssl, Metadata *metadata) {
         ;
       metadata->artist.data = p + 1;
       unsigned char *r = p + 1;
-      int i = 0;
       while (*r++ != '"') i++;
       metadata->artist.data[i] = '\0';
       metadata->artist.len = i;
 
       r = p + i;
-      i = 0;
 
       while (*r++ != ':')
         ;
       metadata->title.data = r + 1;
       unsigned char *q = r + 1;
-      while (*q++ != '"') i++;
-      metadata->title.data[i] = '\0';
-      metadata->title.len = i;
+      while (*q++ != '"') j++;
+      metadata->title.data[j - 1] = '\0';
+      metadata->title.len = j;
     }
 
   } else if (bytes_received == 0) {
@@ -246,4 +319,12 @@ int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
   }
 
   return -1;  // Pattern not found
+}
+
+static int thread_create(struct thr_info *thr, void *func) {
+  int err = 0;
+  pthread_attr_init(&thr->attr);
+  err = pthread_create(&thr->pth, &thr->attr, func, thr);
+  pthread_attr_destroy(&thr->attr);
+  return err;
 }
