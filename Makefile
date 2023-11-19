@@ -54,7 +54,7 @@ clean:
 	for file in index; do if [ -f $$file ]; then rm $$file; fi; done
 	# rm -f [bin/test1 bin/test2 bin/orgis bin/orgis.exe bin/test1.exe bin/test2.exe]
 	# if [ -f bin/test1.exe ]; then rm bin/test1.exe; fi
-	rm -rf *.o *.exe test_main test3 test3.exe fann fann.exe
+	rm -rf *.o *.exe test_main test3 test3.exe fann fann.exe .DS_Store
 	@echo "cleaned"
 	
 	
