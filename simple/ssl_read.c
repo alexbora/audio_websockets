@@ -236,6 +236,38 @@ void send_request(SSL *ssl, const char *path, const char *host) {
   }
 }
 
+Metadata get_name(int *index, unsigned char *buf) {
+  Metadata metadata;
+  int i = 0;
+
+  unsigned char *p = buf + *index;
+  while (*p++ != ':')
+    ;
+  metadata.artist.data = p + 1;
+  unsigned char *r = p + 1;
+  while (*r++ != '"') i++;
+  metadata.artist.data[i] = '\0';
+  metadata.artist.len = i;
+  *index = i;
+  return metadata;
+}
+
+Metadata get_title(int *index, unsigned char *buf) {
+  Metadata metadata;
+  int i = 0;
+
+  unsigned char *p = buf + *index;
+  while (*p++ != ':')
+    ;
+  metadata.title.data = p + 1;
+  unsigned char *r = p + 1;
+  while (*r++ != '"') i++;
+  metadata.title.data[i] = '\0';
+  metadata.title.len = i;
+  *index = i;
+  return metadata;
+}
+
 void read_response(SSL *ssl, Metadata *metadata) {
   int i = 0, j = i;
   unsigned char buffer[1024] = {0};
@@ -257,6 +289,9 @@ void read_response(SSL *ssl, Metadata *metadata) {
     /* Monolink","title":"Harlem River (Radio Edit)", */
 
     if (artistIndex != -1) {
+      /* *metadata = get_name(&artistIndex, buffer); */
+      /* *metadata = get_title(&artistIndex, buffer + artistIndex); */
+
       /* printf("Received response:\n%s\n", buffer + artistIndex); */
       unsigned char *p = buffer + artistIndex;
       while (*p++ != ':')
@@ -277,7 +312,6 @@ void read_response(SSL *ssl, Metadata *metadata) {
       metadata->title.data[j - 1] = '\0';
       metadata->title.len = j;
     }
-
   } else if (bytes_received == 0) {
     fprintf(stderr, "Server closed the connection\n");
     exit(EXIT_SUCCESS);
