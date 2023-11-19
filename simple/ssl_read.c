@@ -94,7 +94,7 @@ void read_response(SSL *ssl, Metadata *);
 int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
                      int patternLength);
 
-void flushSocket(int sockfd) {
+static void flushSocket(int sockfd) {
   char flushBuffer[1024];
   while (recv(sockfd, flushBuffer, sizeof(flushBuffer), MSG_DONTWAIT) > 0)
     ;
@@ -102,7 +102,7 @@ void flushSocket(int sockfd) {
 
 static int thread_create(struct thr_info *, void *);
 
-void get_meta(void *arg) {
+static void get_meta(void *arg) {
   struct thr_info *thr = (struct thr_info *)arg;
   Metadata metadata;
 
@@ -137,7 +137,7 @@ void get_meta(void *arg) {
   cleanup_openssl();
 };
 
-int main() {
+int meta() {
   struct thr_info thr;
   thr.id = 2;
   thr.pth = 0;
@@ -154,7 +154,7 @@ int main() {
   return 0;
 }
 
-void init_openssl() {
+static void init_openssl() {
   SSL_library_init();
   OpenSSL_add_all_algorithms();
   SSL_load_error_strings();

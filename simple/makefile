@@ -8,7 +8,7 @@ LIBS:=$(shell pkg-config --libs OpenSSL) $(shell pkg-config --libs libcurl) -lpt
 INCLUDES:= $(shell pkg-config --cflags OpenSSL) $(shell pkg-config --cflags libcurl) -lpthread
 CC:=
 
-SRC := ssl_read.c  # Replace with your actual source files
+SRC := main.c ssl_read.c  # Replace with your actual source files
 TARGET :=   # Replace with your actual target executable
 SUFFIX:= 
 
@@ -36,15 +36,15 @@ endif
 
 .PHONY: all release debug config clean
 
-all: config
+all: config $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) $(SRC) -o $(TARGET)$(SUFFIX) 
 
-release: CFLAGS += -O3
-release: 
+release: CFLAGS += -Ofast -march=native -mtune=native -funroll-loops -finline-functions -fomit-frame-pointer -ffast-math
+release: config $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) $(SRC) -o $(TARGET)_release$(SUFFIX) 
 
 debug: CFLAGS += -O0 -Wall -Wextra -g
-debug: 
+debug: config $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) $(SRC) -o $(TARGET)_debug$(SUFFIX)
 
 config:
