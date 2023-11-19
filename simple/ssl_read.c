@@ -5,14 +5,14 @@
  */
 
 #ifndef _WIN32
-#define unix
+#define nix
 #endif
 
 #ifdef WIN32
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <windows.h>
 #include <winsock2.h>
-#if _WIN32_WINNT == 0x0601  // Windows 7
+#if _WIN32_WINNT == 0x0601 // Windows 7
 #define WINDOWS_CPU_GROUPS_ENABLED 1
 #endif
 #define sleep(secs) Sleep((secs)*1000)
@@ -45,20 +45,22 @@ typedef int ssize_t;
 #define likely(expr) (expr)
 #endif
 
-#ifdef unix
+#ifdef nix
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <openssl/err.h>
 #include <openssl/ssl.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <unistd.h>
 #endif
 
-#define swap_vars(a, b) \
-  a ^= b;               \
-  b ^= a;               \
+#define swap_vars(a, b)                                                        \
+  a ^= b;                                                                      \
+  b ^= a;                                                                      \
   a ^= b;
 
 #define HOST "antenne.de"
@@ -187,9 +189,11 @@ int create_socket(const char *host, const char *port) {
 
   for (rp = result; rp != NULL; rp = rp->ai_next) {
     sockfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
-    if (sockfd == -1) continue;
+    if (sockfd == -1)
+      continue;
 
-    if (connect(sockfd, rp->ai_addr, rp->ai_addrlen) != -1) break;  // Success
+    if (connect(sockfd, rp->ai_addr, rp->ai_addrlen) != -1)
+      break; // Success
 
     close(sockfd);
   }
@@ -245,7 +249,8 @@ Metadata get_name(int *index, unsigned char *buf) {
     ;
   metadata.artist.data = p + 1;
   unsigned char *r = p + 1;
-  while (*r++ != '"') i++;
+  while (*r++ != '"')
+    i++;
   metadata.artist.data[i] = '\0';
   metadata.artist.len = i;
   *index = i;
@@ -261,7 +266,8 @@ Metadata get_title(int *index, unsigned char *buf) {
     ;
   metadata.title.data = p + 1;
   unsigned char *r = p + 1;
-  while (*r++ != '"') i++;
+  while (*r++ != '"')
+    i++;
   metadata.title.data[i] = '\0';
   metadata.title.len = i;
   *index = i;
@@ -298,7 +304,8 @@ void read_response(SSL *ssl, Metadata *metadata) {
         ;
       metadata->artist.data = p + 1;
       unsigned char *r = p + 1;
-      while (*r++ != '"') i++;
+      while (*r++ != '"')
+        i++;
       metadata->artist.data[i] = '\0';
       metadata->artist.len = i;
 
@@ -308,7 +315,8 @@ void read_response(SSL *ssl, Metadata *metadata) {
         ;
       metadata->title.data = r + 1;
       unsigned char *q = r + 1;
-      while (*q++ != '"') j++;
+      while (*q++ != '"')
+        j++;
       metadata->title.data[j - 1] = '\0';
       metadata->title.len = j;
     }
@@ -326,20 +334,22 @@ int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
   int badChar[256];
 
   // Preprocess the bad character heuristic array
-  for (int i = 0; i < 256; i++) badChar[i] = patternLength;
+  for (int i = 0; i < 256; i++)
+    badChar[i] = patternLength;
 
   for (int i = 0; i < patternLength - 1; i++)
     badChar[(unsigned char)pattern[i]] = patternLength - 1 - i;
 
   // Boyer-Moore search algorithm
-  int s = 0;  // Shift of the pattern with respect to the text
+  int s = 0; // Shift of the pattern with respect to the text
 
   while (s <= (textLength - patternLength)) {
     int j = patternLength - 1;
 
     // Keep reducing the index j of the pattern while characters of the pattern
     // and text are matching
-    while (j >= 0 && pattern[j] == text[s + j]) j--;
+    while (j >= 0 && pattern[j] == text[s + j])
+      j--;
 
     // If the pattern is present at the current shift, return the index
     if (j < 0) {
@@ -352,7 +362,7 @@ int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
     }
   }
 
-  return -1;  // Pattern not found
+  return -1; // Pattern not found
 }
 
 static int thread_create(struct thr_info *thr, void *func) {

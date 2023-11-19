@@ -18,7 +18,7 @@ endif
 
 ifeq ($(UNAME_S),Linux)
     # Linux-specific settings
-    CC=gcc-12x
+    CC=/usr/local/gcc-14x/bin/gcc
 		LIBS=-lssl -lcrypto -lcurl -lpthread
     TARGET=ssl_read
 else ifeq ($(UNAME_S),Darwin)
