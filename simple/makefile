@@ -58,6 +58,6 @@ config:
 	@echo "#endif" >> config.h
 
 clean:
-	$(RM) -rf $(TARGET) *.o *~ *.dSYM
+	$(RM) -rf $(TARGET)$(SUFFIX) $(TARGET)_release$(SUFFIX) $(TARGET)_debug$(SUFFIX) *.o *~ *.dSYM
 
 
