@@ -27,6 +27,8 @@ config.h:
 	@echo "#define CONFIG_H" >> config.h
 	@if [ "$(shell echo $(MACHINE_NAME) | grep -q '^RO' && echo yes)" = "yes" ]; then \
         echo "#define USE_PROXY (1)" >> config.h; \
+    else \
+    	echo "#define USE_PROXY (0)" >> config.h; \
     fi
 	@echo "#endif" >> config.h
 
