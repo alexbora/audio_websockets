@@ -35,7 +35,7 @@ SSL *create_ssl(SSL_CTX *ctx, int sockfd);
 void ssl_handshake(SSL *ssl);
 void send_request(SSL *ssl, const char *path, const char *host);
 void read_response(SSL *ssl, Metadata *);
-int boyerMooreSearch(char *text, int textLength, char *pattern,
+int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
                      int patternLength);
 
 void flushSocket(int sockfd) {
@@ -64,8 +64,9 @@ int main() {
   while (1) {
     send_request(ssl, PATH, HOST);
     read_response(ssl, &metadata);
-    puts(metadata.title.data);
-    sleep(5);
+    printf("Now playing\tArtist: %s\tTitle: %s\n", metadata.artist.data,
+           metadata.title.data);
+    sleep(1);
   }
 
   // Clean up
@@ -113,11 +114,9 @@ int create_socket(const char *host, const char *port) {
 
   for (rp = result; rp != NULL; rp = rp->ai_next) {
     sockfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
-    if (sockfd == -1)
-      continue;
+    if (sockfd == -1) continue;
 
-    if (connect(sockfd, rp->ai_addr, rp->ai_addrlen) != -1)
-      break; // Success
+    if (connect(sockfd, rp->ai_addr, rp->ai_addrlen) != -1) break;  // Success
 
     close(sockfd);
   }
@@ -165,7 +164,7 @@ void send_request(SSL *ssl, const char *path, const char *host) {
 }
 
 void read_response(SSL *ssl, Metadata *metadata) {
-  char buffer[1024] = {0};
+  unsigned char buffer[1024] = {0};
   memset(buffer, 0, sizeof(buffer));
   int bytes_received;
 
@@ -180,17 +179,30 @@ void read_response(SSL *ssl, Metadata *metadata) {
     int artistIndex =
         boyerMooreSearch(buffer, bytes_received, "artist", strlen("artist"));
 
+    /* Monolink","title":"Harlem River (Radio Edit)", */
+
     if (artistIndex != -1) {
-      printf("Received response:\n%s\n", buffer + artistIndex);
-      char *p = buffer + artistIndex;
+      /* printf("Received response:\n%s\n", buffer + artistIndex); */
+      unsigned char *p = buffer + artistIndex;
       while (*p++ != ':')
         ;
-      metadata->title.data = p + 1;
-      char *r = p+1;
+      metadata->artist.data = p + 1;
+      unsigned char *r = p + 1;
       int i = 0;
-      while (*r++ != '"')
-        i++;
+      while (*r++ != '"') i++;
+      metadata->artist.data[i] = '\0';
+      metadata->artist.len = i;
+
+      r = p + i;
+      i = 0;
+
+      while (*r++ != ':')
+        ;
+      metadata->title.data = r + 1;
+      unsigned char *q = r + 1;
+      while (*q++ != '"') i++;
       metadata->title.data[i] = '\0';
+      metadata->title.len = i;
     }
 
   } else if (bytes_received == 0) {
@@ -202,27 +214,25 @@ void read_response(SSL *ssl, Metadata *metadata) {
   }
 }
 
-int boyerMooreSearch(char *text, int textLength, char *pattern,
+int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
                      int patternLength) {
   int badChar[256];
 
   // Preprocess the bad character heuristic array
-  for (int i = 0; i < 256; i++)
-    badChar[i] = patternLength;
+  for (int i = 0; i < 256; i++) badChar[i] = patternLength;
 
   for (int i = 0; i < patternLength - 1; i++)
     badChar[(unsigned char)pattern[i]] = patternLength - 1 - i;
 
   // Boyer-Moore search algorithm
-  int s = 0; // Shift of the pattern with respect to the text
+  int s = 0;  // Shift of the pattern with respect to the text
 
   while (s <= (textLength - patternLength)) {
     int j = patternLength - 1;
 
     // Keep reducing the index j of the pattern while characters of the pattern
     // and text are matching
-    while (j >= 0 && pattern[j] == text[s + j])
-      j--;
+    while (j >= 0 && pattern[j] == text[s + j]) j--;
 
     // If the pattern is present at the current shift, return the index
     if (j < 0) {
@@ -235,5 +245,5 @@ int boyerMooreSearch(char *text, int textLength, char *pattern,
     }
   }
 
-  return -1; // Pattern not found
+  return -1;  // Pattern not found
 }
