@@ -11,8 +11,8 @@
 int meta(void);
 
 int main(int argc, char *argv[]) {
-  meta(); 
-  
+  meta();
+
   return EXIT_SUCCESS;
 }
 

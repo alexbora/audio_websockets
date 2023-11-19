@@ -12,7 +12,7 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <windows.h>
 #include <winsock2.h>
-#if _WIN32_WINNT == 0x0601 // Windows 7
+#if _WIN32_WINNT == 0x0601  // Windows 7
 #define WINDOWS_CPU_GROUPS_ENABLED 1
 #endif
 #define sleep(secs) Sleep((secs)*1000)
@@ -58,9 +58,15 @@ typedef int ssize_t;
 #include <unistd.h>
 #endif
 
-#define swap_vars(a, b)                                                        \
-  a ^= b;                                                                      \
-  b ^= a;                                                                      \
+#ifdef _MSC_VER
+#define inline __inline  // for MSVCi
+#elif defined(__GNUC__)
+#define inline __attribute__((always_inline)) inline
+#endif
+
+#define swap_vars(a, b) \
+  a ^= b;               \
+  b ^= a;               \
   a ^= b;
 
 #define HOST "antenne.de"
@@ -83,16 +89,15 @@ typedef struct {
   Buffer title;
 } Metadata;
 
-void init_openssl();
-void cleanup_openssl();
-SSL_CTX *create_context();
-int create_socket(const char *host, const char *port);
-SSL *create_ssl(SSL_CTX *ctx, int sockfd);
-void ssl_handshake(SSL *ssl);
-void send_request(SSL *ssl, const char *path, const char *host);
-void read_response(SSL *ssl, Metadata *);
-int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
-                     int patternLength);
+static void init_openssl();
+static void cleanup_openssl();
+static SSL_CTX *create_context();
+static int create_socket(const char *host, const char *port);
+static SSL *create_ssl(SSL_CTX *ctx, int sockfd);
+static void ssl_handshake(SSL *ssl);
+static void send_request(SSL *ssl, const char *path, const char *host);
+static void read_response(SSL *ssl, Metadata *);
+static int boyerMooreSearch(unsigned char *, int, char *, int);
 
 static void flushSocket(int sockfd) {
   char flushBuffer[1024];
@@ -124,7 +129,7 @@ static void get_meta(void *arg) {
   while (1) {
     send_request(ssl, PATH, HOST);
     read_response(ssl, &metadata);
-    printf("Now playing...\tArtist: %s\tTitle: %s\n", metadata.artist.data,
+    printf("Now playing...\t%s\t%s\n", metadata.artist.data,
            metadata.title.data);
     sleep(1);
   }
@@ -137,7 +142,7 @@ static void get_meta(void *arg) {
   cleanup_openssl();
 };
 
-int meta() {
+static inline int meta_() {
   struct thr_info thr;
   thr.id = 2;
   thr.pth = 0;
@@ -154,7 +159,9 @@ int meta() {
   return 0;
 }
 
-static void init_openssl() {
+int meta(void) { return meta_(); };
+
+void init_openssl() {
   SSL_library_init();
   OpenSSL_add_all_algorithms();
   SSL_load_error_strings();
@@ -167,7 +174,7 @@ void cleanup_openssl() {
 
 SSL_CTX *create_context() {
   SSL_CTX *ctx = SSL_CTX_new(TLS_client_method());
-  if (!ctx) {
+  if (unlikely(ctx == NULL)) {
     fprintf(stderr, "Error creating SSL context\n");
     exit(EXIT_FAILURE);
   }
@@ -175,10 +182,9 @@ SSL_CTX *create_context() {
 }
 
 int create_socket(const char *host, const char *port) {
-  struct addrinfo hints, *result, *rp;
   int sockfd = -1;
-
-  memset(&hints, 0, sizeof(struct addrinfo));
+  struct addrinfo hints = {0}, *result = NULL, *rp = NULL;
+  /* memset(&hints, 0, sizeof(struct addrinfo)); */
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
 
@@ -189,11 +195,9 @@ int create_socket(const char *host, const char *port) {
 
   for (rp = result; rp != NULL; rp = rp->ai_next) {
     sockfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
-    if (sockfd == -1)
-      continue;
+    if (sockfd == -1) continue;
 
-    if (connect(sockfd, rp->ai_addr, rp->ai_addrlen) != -1)
-      break; // Success
+    if (connect(sockfd, rp->ai_addr, rp->ai_addrlen) != -1) break;  // Success
 
     close(sockfd);
   }
@@ -249,8 +253,7 @@ Metadata get_name(int *index, unsigned char *buf) {
     ;
   metadata.artist.data = p + 1;
   unsigned char *r = p + 1;
-  while (*r++ != '"')
-    i++;
+  while (*r++ != '"') i++;
   metadata.artist.data[i] = '\0';
   metadata.artist.len = i;
   *index = i;
@@ -266,8 +269,7 @@ Metadata get_title(int *index, unsigned char *buf) {
     ;
   metadata.title.data = p + 1;
   unsigned char *r = p + 1;
-  while (*r++ != '"')
-    i++;
+  while (*r++ != '"') i++;
   metadata.title.data[i] = '\0';
   metadata.title.len = i;
   *index = i;
@@ -276,7 +278,7 @@ Metadata get_title(int *index, unsigned char *buf) {
 
 void read_response(SSL *ssl, Metadata *metadata) {
   int i = 0, j = i;
-  unsigned char buffer[1024] = {0};
+  unsigned char buffer[1024 * 2] = {0};
 
   memset(buffer, 0, sizeof(buffer));
   int bytes_received;
@@ -304,8 +306,7 @@ void read_response(SSL *ssl, Metadata *metadata) {
         ;
       metadata->artist.data = p + 1;
       unsigned char *r = p + 1;
-      while (*r++ != '"')
-        i++;
+      while (*r++ != '"') i++;
       metadata->artist.data[i] = '\0';
       metadata->artist.len = i;
 
@@ -315,8 +316,7 @@ void read_response(SSL *ssl, Metadata *metadata) {
         ;
       metadata->title.data = r + 1;
       unsigned char *q = r + 1;
-      while (*q++ != '"')
-        j++;
+      while (*q++ != '"') j++;
       metadata->title.data[j - 1] = '\0';
       metadata->title.len = j;
     }
@@ -334,22 +334,20 @@ int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
   int badChar[256];
 
   // Preprocess the bad character heuristic array
-  for (int i = 0; i < 256; i++)
-    badChar[i] = patternLength;
+  for (int i = 0; i < 256; i++) badChar[i] = patternLength;
 
   for (int i = 0; i < patternLength - 1; i++)
     badChar[(unsigned char)pattern[i]] = patternLength - 1 - i;
 
   // Boyer-Moore search algorithm
-  int s = 0; // Shift of the pattern with respect to the text
+  int s = 0;  // Shift of the pattern with respect to the text
 
   while (s <= (textLength - patternLength)) {
     int j = patternLength - 1;
 
     // Keep reducing the index j of the pattern while characters of the pattern
     // and text are matching
-    while (j >= 0 && pattern[j] == text[s + j])
-      j--;
+    while (j >= 0 && pattern[j] == text[s + j]) j--;
 
     // If the pattern is present at the current shift, return the index
     if (j < 0) {
@@ -362,7 +360,7 @@ int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
     }
   }
 
-  return -1; // Pattern not found
+  return -1;  // Pattern not found
 }
 
 static int thread_create(struct thr_info *thr, void *func) {
