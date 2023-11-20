@@ -129,8 +129,8 @@ static void get_meta(void *arg) {
   while (1) {
     send_request(ssl, PATH, HOST);
     read_response(ssl, &metadata);
-    printf("Now playing...\t%s\t%s\n", metadata.artist.data,
-           metadata.title.data);
+    /* printf("Now playing...\t%s\t%s\n", metadata.artist.data, */
+    /* metadata.title.data); */
     sleep(1);
   }
 
@@ -276,21 +276,29 @@ Metadata get_title(int *index, unsigned char *buf) {
   return metadata;
 }
 
+static inline void split_string(unsigned char *in) {
+  unsigned char *start = in;
+  unsigned char *end = in;
 
+  Metadata metadata;
+  while (*end) {
+    while (*end && *end != '"') end++;
+    /* printf("Substring:"); */
+    while (start < end) putchar(*start++);
+    printf("\n");
+    /* start[end - start] = '\0'; */
 
-static inline void split_string(const unsigned *in){
-const unsigned char *start = input; 
-const unsigned char *end = input; 
+    /* printf("string:%s\n", (const char *)start); */
 
-while(*end){  
-while(*end && *end !='"')end++;
-printf("Substring:"); 
-while(start<end)putchar(*start++);
-printf("%s\n", "\n"); 
+    /* metadata.artist.data = start; */
+    /* metadata.artist.len = end - start; */
+    /* metadata.artist.data[end - start] = '\0'; */
 
-start= end + (*end !='\0'); 
-end = start;
-}
+    /* printf("ARTIST: %s\n", metadata.artist.data); */
+
+    start = end + (*end != '\0');
+    end = start;
+  }
 }
 
 void read_response(SSL *ssl, Metadata *metadata) {
@@ -319,7 +327,7 @@ void read_response(SSL *ssl, Metadata *metadata) {
 
       /* printf("Received response:\n%s\n", buffer + artistIndex); */
       unsigned char *p = buffer + artistIndex;
-split_string(p);
+      split_string(p);
 
       while (*p++ != ':')
         ;
@@ -346,9 +354,6 @@ split_string(p);
     fprintf(stderr, "Error reading response\n");
     exit(EXIT_FAILURE);
   }
-
-
-
 }
 
 int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
