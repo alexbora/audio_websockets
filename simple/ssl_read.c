@@ -276,6 +276,23 @@ Metadata get_title(int *index, unsigned char *buf) {
   return metadata;
 }
 
+
+
+static inline void split_string(const unsigned *in){
+const unsigned char *start = input; 
+const unsigned char *end = input; 
+
+while(*end){  
+while(*end && *end !='"')end++;
+printf("Substring:"); 
+while(start<end)putchar(*start++);
+printf("%s\n", "\n"); 
+
+start= end + (*end !='\0'); 
+end = start;
+}
+}
+
 void read_response(SSL *ssl, Metadata *metadata) {
   int i = 0, j = i;
   unsigned char buffer[1024 * 2] = {0};
@@ -302,6 +319,8 @@ void read_response(SSL *ssl, Metadata *metadata) {
 
       /* printf("Received response:\n%s\n", buffer + artistIndex); */
       unsigned char *p = buffer + artistIndex;
+split_string(p);
+
       while (*p++ != ':')
         ;
       metadata->artist.data = p + 1;
@@ -327,6 +346,9 @@ void read_response(SSL *ssl, Metadata *metadata) {
     fprintf(stderr, "Error reading response\n");
     exit(EXIT_FAILURE);
   }
+
+
+
 }
 
 int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
