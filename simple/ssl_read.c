@@ -281,24 +281,50 @@ static inline void split_string(unsigned char *in) {
   unsigned char *end = in;
 
   Metadata metadata;
+
+  size_t count = 0;
+
+  // Count the number of substrings
   while (*end) {
     while (*end && *end != '"') end++;
-    /* printf("Substring:"); */
-    while (start < end) putchar(*start++);
-    printf("\n");
-    /* start[end - start] = '\0'; */
+    count++;
+    end = *end ? end + 1 : end;
+  }
 
-    /* printf("string:%s\n", (const char *)start); */
+  start = end = in;
 
-    /* metadata.artist.data = start; */
-    /* metadata.artist.len = end - start; */
-    /* metadata.artist.data[end - start] = '\0'; */
+  printf("Number of substrings: %zu\n", count);
 
-    /* printf("ARTIST: %s\n", metadata.artist.data); */
+  count = count > 2 ? 2 : count;
 
+  unsigned char **substrings = malloc(sizeof(unsigned char *) * count);
+  for (size_t i = 0; i < count; i++) {
+    while (*end && *end != '"') end++;
+
+    substrings[i] = start;
     start = end + (*end != '\0');
     end = start;
+#if 0
+    while (*end) {
+      while (*end && *end != '"') end++;
+      /* printf("Substring:"); */
+      while (start < end) putchar(*start++);
+      printf("\n");
+      /* start[end - start] = '\0'; */
+
+      /* printf("string:%s\n", (const char *)start); */
+
+      /* metadata.artist.data = start; */
+      /* metadata.artist.len = end - start; */
+      /* metadata.artist.data[end - start] = '\0'; */
+
+      /* printf("ARTIST: %s\n", metadata.artist.data); */
+
+      start = end + (*end != '\0');
+      end = start;
+#endif
   }
+  printf("Substring: %s\n", (const char *)substrings[0]);
 }
 
 void read_response(SSL *ssl, Metadata *metadata) {
@@ -372,8 +398,8 @@ int boyerMooreSearch(unsigned char *text, int textLength, char *pattern,
   while (s <= (textLength - patternLength)) {
     int j = patternLength - 1;
 
-    // Keep reducing the index j of the pattern while characters of the pattern
-    // and text are matching
+    // Keep reducing the index j of the pattern while characters of the
+    // pattern and text are matching
     while (j >= 0 && pattern[j] == text[s + j]) j--;
 
     // If the pattern is present at the current shift, return the index
