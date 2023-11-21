@@ -283,20 +283,27 @@ static inline void split_string(unsigned char *in) {
   Metadata metadata;
 
   size_t count = 0;
-
   // Count the number of substrings
   while (*end) {
     while (*end && *end != '"') end++;
     count++;
     end = *end ? end + 1 : end;
   }
-
   start = end = in;
-
   printf("Number of substrings: %zu\n", count);
 
-  count = count > 2 ? 2 : count;
-
+  /* count = count > 2 ? 2 : count; */
+  unsigned char *artist, *title;
+  while (*end) {
+    while (*end && *end != '"') end++;
+    /* artist = start; */
+    /* artist[end - start] = '\0'; */
+    while (start < end) putchar(*start++);
+    start = end + (*end != '\0') + (*end != ':');
+    end = start;
+    /* puts(artist); */
+  }
+#if 0
   unsigned char **substrings = malloc(sizeof(unsigned char *) * count);
   for (size_t i = 0; i < count; i++) {
     while (*end && *end != '"') end++;
@@ -304,7 +311,6 @@ static inline void split_string(unsigned char *in) {
     substrings[i] = start;
     start = end + (*end != '\0');
     end = start;
-#if 0
     while (*end) {
       while (*end && *end != '"') end++;
       /* printf("Substring:"); */
@@ -322,9 +328,9 @@ static inline void split_string(unsigned char *in) {
 
       start = end + (*end != '\0');
       end = start;
+}
 #endif
-  }
-  printf("Substring: %s\n", (const char *)substrings[0]);
+  /* printf("Substring: %s\n", (const char *)substrings[0]); */
 }
 
 void read_response(SSL *ssl, Metadata *metadata) {
