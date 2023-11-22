@@ -73,6 +73,16 @@ typedef int ssize_t;
 #define PORT "443"
 #define PATH "/api/metadata/now/chillout"
 
+static void init_openssl();
+static void cleanup_openssl();
+static SSL_CTX *create_context();
+static int create_socket(const char *host, const char *port);
+static SSL *create_ssl(SSL_CTX *ctx, int sockfd);
+static void ssl_handshake(SSL *ssl);
+static void send_request(SSL *ssl, const char *path, const char *host);
+static void read_response(SSL *ssl, Metadata *);
+static int boyerMooreSearch(unsigned char *, int, char *, int);
+
 struct thr_info {
   int id;
   pthread_t pth;
@@ -89,15 +99,6 @@ typedef struct {
   Buffer title;
 } Metadata;
 
-static void init_openssl();
-static void cleanup_openssl();
-static SSL_CTX *create_context();
-static int create_socket(const char *host, const char *port);
-static SSL *create_ssl(SSL_CTX *ctx, int sockfd);
-static void ssl_handshake(SSL *ssl);
-static void send_request(SSL *ssl, const char *path, const char *host);
-static void read_response(SSL *ssl, Metadata *);
-static int boyerMooreSearch(unsigned char *, int, char *, int);
 
 static void flushSocket(int sockfd) {
   char flushBuffer[1024];
