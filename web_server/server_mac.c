@@ -98,6 +98,7 @@ int main(int argc, char **argv) {
   debug(INFO, "Kqueue created");
   // Register server socket for read events
   EV_SET(&change, serverSocket, EVFILT_READ, EV_ADD, 0, 0, NULL);
+
   if (kevent(kqueue_fd, &change, 1, NULL, 0, NULL) == -1)
     debug(ERROR, "Kevent registration failed for server socket");
   debug(INFO, "Kevent registered");
@@ -124,10 +125,10 @@ int main(int argc, char **argv) {
           // Adjust timeout based on events per second
           timeout = events_per_second > 0 ? (int)(1000 / events_per_second)
                                           : INITIAL_TIMEOUT;
-          debug(INFO, "Timeout adjusted to %d", timeout);
           // Reset counters
           events_count = 0;
           start_time = current_time;
+          debug(INFO, "Timeout adjusted to %d", timeout);
         }
       } break;
 
@@ -153,32 +154,32 @@ int main(int argc, char **argv) {
             }
           }
 
-          if (clientSocket == -1 && errno != EAGAIN && errno != EWOULDBLOCK) {
+          if (clientSocket == -1 && errno != EAGAIN && errno != EWOULDBLOCK)
             debug(WARN, "Accept failed");
-          }
+
         } else {
           // Handle data from client
           char buffer[1024];
           ssize_t bytesRead;
           while ((bytesRead = read(event.ident, buffer, sizeof(buffer))) > 0) {
-            // Process the data received from the client
-            printf("Received data from client %zu: %.*s\n", event.ident,
-                   (int)bytesRead, buffer);
+            debug(INFO, "Received data from client %zu: %.*s\n", event.ident,
+                  (int)bytesRead, buffer);
             events_count++;
           }
 
           if (bytesRead == 0) {
             // Connection closed by the client
-            printf("Client %zu disconnected.\n", event.ident);
+            debug(INFO, "Client %zu disconnected.\n", event.ident);
 
             // Unregister client socket from kqueue
             EV_SET(&change, event.ident, EVFILT_READ, EV_DELETE, 0, 0, NULL);
-            kevent(kqueue_fd, &change, 1, NULL, 0, NULL);
 
-            close(event.ident);
-          } else if (bytesRead == -1 && errno != EAGAIN &&
-                     errno != EWOULDBLOCK) {
-            perror("Error reading data from client");
+            if (kevent(kqueue_fd, &change, 1, NULL, 0, NULL) == -1) {
+              debug(ERROR, "Kevent registration failed for server socket");
+              close(event.ident);
+            }
+          } else if (bytesRead == -1 && errno != (EAGAIN | EWOULDBLOCK)) {
+            debug(INFO, "Error reading data from client");
 
             // Unregister client socket from kqueue
             EV_SET(&change, event.ident, EVFILT_READ, EV_DELETE, 0, 0, NULL);
