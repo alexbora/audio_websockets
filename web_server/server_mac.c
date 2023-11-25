@@ -14,7 +14,7 @@
 #define PORT 8080
 #define MAX_EVENTS 10
 #define INITIAL_TIMEOUT 1000  // Initial poll timeout in milliseconds
-#define WINDOW_SIZE 60        // Time window in seconds
+#define WINDOW_SIZE 10        // Time window in seconds
 
 #ifdef DEBUG
 #define BOLD_RED "\033[1;31m"
@@ -164,6 +164,7 @@ int main(int argc, char **argv) {
           while ((bytesRead = read(event.ident, buffer, sizeof(buffer))) > 0) {
             debug(INFO, "Received data from client %zu: %.*s\n", event.ident,
                   (int)bytesRead, buffer);
+
             events_count++;
           }
 
@@ -187,6 +188,8 @@ int main(int argc, char **argv) {
 
             close(event.ident);
           }
+          timeout = INITIAL_TIMEOUT;
+          debug(INFO, "Timeout reset to %d", timeout);
         }
 
         // Reset timeout to initial value
