@@ -17,47 +17,51 @@
 #define WINDOW_SIZE 60        // Time window in seconds
 
 #ifdef DEBUG
-#define RED "\033[1;31m"
+#define BOLD_RED "\033[1;31m"
+#define GREEN "\033[0;32m"
+#define YELLOW "\033[0;33m"
 #define RESET "\033[0m"
 
 enum {
   INFO,
-  WARNING,
+  WARN,
   ERROR,
 };
 
-#define debug(level, fmt, ...) \
-  do {                         \
-    switch (level) {
-if (level == ERROR) {
-}
-
-fprintf(stderr, "%s[ERROR] %s:%d:%s(): " fmt, RED, __FILE__, __LINE__, __func__,
-        ##__VA_ARGS__);
-}
-else if (level == INFO) {
-  fprintf(stderr, "[INFO] %s:%d:%s(): " fmt, __FILE__, __LINE__, __func__,
-          ##__VA_ARGS__);
-}
-else if (level == DEBUG) {
-  fprintf(stderr, "[DEBUG] %s:%d:%s(): " fmt, __FILE__, __LINE__, __func__,
-          ##__VA_ARGS__);
-}
-}
-while (0)
+#define debug(level, fmt, ...)                                            \
+  do {                                                                    \
+    switch (level) {                                                      \
+      case INFO:                                                          \
+        fprintf(stderr, "%s[INFO] %s:%d:%s(): " fmt, GREEN, __FILE__,     \
+                __LINE__, __func__, ##__VA_ARGS__);                       \
+        fprintf(stderr, RESET);                                           \
+        break;                                                            \
+      case ERROR:                                                         \
+        fprintf(stderr, "%s[ERROR] %s:%d:%s(): " fmt, BOLD_RED, __FILE__, \
+                __LINE__, __func__, ##__VA_ARGS__);                       \
+        fprintf(stderr, RESET);                                           \
+        exit(EXIT_FAILURE);                                               \
+        break;                                                            \
+      case WARN:                                                          \
+        fprintf(stderr, "%s[WARN] %s:%d:%s(): " fmt, YELLOW, __FILE__,    \
+                __LINE__, __func__, ##__VA_ARGS__);                       \
+        fprintf(stderr, RESET);                                           \
+        break;                                                            \
+    }                                                                     \
+  } while (0)
 #else
 #define debug(...) (void)0
-#define RED (void)0
-#define RESET (void)0
 #define INFO(void) 0
 #define WARN (void)0
 #define ERROR (void)0
 #endif
 
-  static inline void setnonblocking(int sockfd) {
-    int flags = fcntl(sockfd, F_GETFL, 0);
-    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
-  }
+static inline void setnonblocking(int sockfd) {
+  int flags = fcntl(sockfd, F_GETFL, 0);
+  if (flags == -1) debug(WARN, "Error getting socket flags");
+  if (fcntl(sockfd, F_SETFL, flags | O_NONBLOCK) == -1)
+    debug(WARN, "Error setting socket to non-blocking");
+}
 
 int main(int argc, char **argv) {
   int serverSocket, clientSocket, kqueue_fd;
@@ -66,10 +70,8 @@ int main(int argc, char **argv) {
   struct kevent change, event;
 
   // Create socket
-  if ((serverSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-    perror("Socket creation failed");
-    exit(EXIT_FAILURE);
-  }
+  if ((serverSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+    debug(ERROR, "Socket creation failed");
 
   // Prepare server address structure
   serverAddr.sin_family = AF_INET;
@@ -78,36 +80,28 @@ int main(int argc, char **argv) {
 
   // Bind the socket
   if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) ==
-      -1) {
-    perror("Bind failed");
-    exit(EXIT_FAILURE);
-  }
+      -1)
+    debug(ERROR, "Socket binding failed");
 
   // Set socket to non-blocking
   setnonblocking(serverSocket);
 
   // Listen for incoming connections
-  if (listen(serverSocket, SOMAXCONN) == -1) {
-    perror("Listen failed");
-    exit(EXIT_FAILURE);
-  }
+  if (listen(serverSocket, SOMAXCONN) == -1) debug(ERROR, "Listen failed");
 
   // Create kqueue instance
   kqueue_fd = kqueue();
-  if (kqueue_fd == -1) {
-    perror("Kqueue creation failed");
-    exit(EXIT_FAILURE);
-  }
+  if (kqueue_fd == -1) debug(ERROR, "Kqueue creation failed");
 
+  debug(INFO, "Kqueue created");
   // Register server socket for read events
   EV_SET(&change, serverSocket, EVFILT_READ, EV_ADD, 0, 0, NULL);
-  if (kevent(kqueue_fd, &change, 1, NULL, 0, NULL) == -1) {
-    perror("Kevent registration failed");
-    exit(EXIT_FAILURE);
-  }
+  if (kevent(kqueue_fd, &change, 1, NULL, 0, NULL) == -1)
+    debug(ERROR, "Kevent registration failed for server socket");
+  debug(INFO, "Kevent registered");
 
   /* printf("Server listening on port %d...\n", PORT); */
-  debug(ERROR, "Server listening on port %d...\n", PORT);
+  debug(INFO, "Server listening on port %d...\n", PORT);
 
   int timeout = INITIAL_TIMEOUT;
   time_t start_time = time(NULL);
@@ -115,6 +109,15 @@ int main(int argc, char **argv) {
 
   while (1) {
     int num_events = kevent(kqueue_fd, NULL, 0, &event, 1, NULL);
+
+    switch (num_events) {
+      case 0:
+        printf("No events\n");
+        break;
+      default:
+        printf("Event: %d\n", num_events);
+        break;
+    }
 
     if (num_events > 0) {
       // Handle events
@@ -197,8 +200,8 @@ int main(int argc, char **argv) {
     }
   }
 
-  // Close the server socket and kqueue instance (this part is unreachable in
-  // this example)
+  // Close the server socket and kqueue instance (this part is unreachable
+  // in this example)
   close(serverSocket);
   close(kqueue_fd);
 
