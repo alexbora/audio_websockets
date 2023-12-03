@@ -5,6 +5,7 @@
  */
 
 #include <arpa/inet.h>
+#include <fcntl.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,8 +27,21 @@ void *handleClient(void *socketDesc) {
   const char *response =
       "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\n\nHello, "
       "World!";
-  send(clientSocket, response, strlen(response), 0);
 
+  char *r;
+  size_t sz;
+  int fd = open("client.html", O_RDONLY);
+  sz = lseek(fd, 0, SEEK_END);
+  lseek(fd, 0, SEEK_SET);
+  r = malloc(sz + strlen(response) + 1);
+
+  sprintf(r, "%s", response);
+  read(fd, r + strlen(response), sz);
+  memcpy(r + (sz + strlen(response)), "\0\r\n\r\n", 4);
+
+  send(clientSocket, r, strlen(r), 0);
+  free(r);
+  r = (void *)0;
   // Close the client socket
   close(clientSocket);
 

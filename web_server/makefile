@@ -8,4 +8,4 @@ all:
 debug: 
 	gcc -g -O2 -Wall server_mac.c -o server_mac -DDEBUG
 clean: 
-	rm server_mac
+	rm -rf server_mac *.dSYM
