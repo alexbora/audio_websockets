@@ -39,7 +39,7 @@ void setnonblocking(int sockfd) {
 }
 
 void handle_client(SOCKET client_socket) {
-  FILE *html_file = fopen("index.html", "r");
+  FILE *html_file = fopen("../index.html", "r");
   if (html_file == NULL) {
     fprintf(stderr, "Error opening HTML file.\n");
     exit(EXIT_FAILURE);
